@@ -1,6 +1,8 @@
 package data;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
@@ -18,14 +20,13 @@ import org.springframework.web.context.WebApplicationContext;
 @Component
 public class BlogDAOImpl implements PostDAO {
 	
-	private static final String USERS="/WEB-INF/users.txt";
-	private static final String POSTS="/WEB-INF/posts.txt"; 
 	private Map<Integer, User> userMap; 
 	private static int userCount = 0; 
 	private static int postCount = 0; 
 	
-	@Autowired 
+	@Autowired
 	private WebApplicationContext wac;
+
 	
 	public BlogDAOImpl(){
 		userMap = new HashMap<>(); 
@@ -36,11 +37,9 @@ public class BlogDAOImpl implements PostDAO {
 	private void initUsers() {
 		// Retrieve an input stream from the servlet context
 		// rather than directly from the file system
-		try(
-				InputStream is = wac.getServletContext().getResourceAsStream(USERS);
-				BufferedReader buf = new BufferedReader(new InputStreamReader(is));
-				){
-
+		try{
+			InputStream is = wac.getServletContext().getResourceAsStream("/WEB-INF/resources/users.txt");
+			BufferedReader buf = new BufferedReader(new InputStreamReader(is));
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM"); 
 
 			String line; 
@@ -65,18 +64,21 @@ public class BlogDAOImpl implements PostDAO {
 		// Retrieve an input stream from the servlet context
 		// rather than directly from the file system
 		try{
-			InputStream is = wac.getServletContext().getResourceAsStream(POSTS);
+//			File  filename = new File(POSTS); 
+//			FileReader fr = new FileReader(filename); 
+			InputStream is = wac.getServletContext().getResourceAsStream("/WEB-INF/resources/posts.txt");
 			BufferedReader buf = new BufferedReader(new InputStreamReader(is));
+//			BufferedReader buf = new BufferedReader(fr); 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM"); 
 
 			String line; 
 			while ((line = buf.readLine()) != null) {
-				String[] tokens = line.split("*");
-				int postId = Integer.parseInt(tokens[0]); 
-				String title = tokens[1];
-				String message = tokens[2];
-				LocalDate accountOrigin = LocalDate.parse(tokens[3], formatter); 
-				int userId  = Integer.parseInt(tokens[4]);
+				String[] tokens = line.split("&");
+				int postId = Integer.parseInt(tokens[0].trim()); 
+				String title = tokens[1].trim();
+				String message = tokens[2].trim();
+				LocalDate accountOrigin = LocalDate.parse(tokens[3].trim(), formatter); 
+				int userId  = Integer.parseInt(tokens[4].trim());
 				Post post = new Post(postId, title, message, accountOrigin, userId); 
 				postCount++; 
 				userMap.get(post.getUserId()).getPosts().put(post.getPostID(), post); 

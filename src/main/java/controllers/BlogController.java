@@ -1,11 +1,15 @@
 package controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import data.PostDAO;
+import data.User;
 
 @Controller
 public class BlogController {
@@ -14,8 +18,12 @@ public class BlogController {
 	
 	//Routing to pages
 	@RequestMapping(path="splash.do", method=RequestMethod.GET)
-	public String splash() {
-		return "splash"; 
+	public ModelAndView splash() {
+		ModelAndView mv = new ModelAndView();
+		List<User> test = dao.getUsers(); 
+		mv.addObject("list", test.get(0)); 
+		mv.setViewName("splash");
+		return mv; 
 	}
 	@RequestMapping(path="browse.do", method=RequestMethod.GET)
 	public String browse() {
@@ -25,4 +33,5 @@ public class BlogController {
 	public String admin() {
 		return "admin"; 
 	}
+	
 }

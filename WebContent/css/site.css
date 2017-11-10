@@ -1,9 +1,7 @@
-@charset "UTF-8";
+/* @charset "UTF-8";
 html, body{
 	height: 100%; 
 	weight: auto; 
-	background-color: black; 
-	color: white; 
 }
 
 #admin, #guest{
@@ -11,4 +9,4 @@ html, body{
 	border: 1px solid green; 
 	border-radius: 5px; 
 	color:white;
-}
+} */
