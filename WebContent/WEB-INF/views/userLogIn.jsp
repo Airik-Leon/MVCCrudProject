@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Airik's blog</title>
+<title></title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -24,7 +24,6 @@
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse"
             id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
@@ -44,24 +43,18 @@
             </ul>
         </div>
     </nav>
-    <ul class="nav nav-pills" style="margin-top:20px; margin-left:5px;">
-        <li class="nav-item"><a class="nav-link active" href="userLogIn.do">${userName}</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="#">Add account</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="#">ManageAccount</a>
-        </li>
-    </ul>
-    <h1 class="row justify-content-center">Hello Internet</h1>
-    <div class="row justify-content-center" id="splashDiv">
-        <form action="admin.do" method="GET">
-            <input class="btn btn-danger" id="admin" type="submit"
-                name="admin" value="${admin}" />
-        </form>
-        <form action="browse.do" method="GET">
-            <input class="btn btn-success" id="guest" type="submit"
-                value="Browse posts" name="guest" />
-        </form>
+    <div class="row justify-content-center">
+        <div>
+            <h2>User log-in</h2>
+            <form action="user-LogIn.do" method="GET">
+                <label>Username:</label> <input type="text"
+                    name="userName" /><br> <label>Password:
+                </label> <input type="password" name="password" /><br> <input
+                    class="btn btn-primary" type="submit" name="log-in"
+                    value="Log In" />
+            </form>
+            <H3 style="color: red;">${NOT_EXIST}</H3>
+        </div>
     </div>
     <footer class="footer">
         <div class="container">

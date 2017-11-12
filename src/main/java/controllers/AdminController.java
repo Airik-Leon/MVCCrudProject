@@ -47,9 +47,14 @@ public class AdminController {
 			int postCount = dao.getPostTotal(); 
 			int userCount = dao.getUserTotal(); 	
 			session.setAttribute("user", user);
+			session.setAttribute("userName", "Log-in");
 			mv.addObject("postCount", postCount); 
 			mv.addObject("userCount", userCount);
 			mv.setViewName("admin");
+			return mv; 
+		}
+		else if(user.getPassword().equals(pw)&& !user.isAdmin()) {
+			mv.setViewName("userLogIn");
 			return mv; 
 		}
 		return mv; 
