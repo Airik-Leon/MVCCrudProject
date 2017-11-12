@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import data.Post;
@@ -38,5 +39,29 @@ public class PostController {
 		dao.createPost(post); 
 		mv.addObject("posts", dao.getPostsByCategory(post.getCategory())); 
 		return mv; 
+	}
+	@RequestMapping("goToReply.do")
+	public ModelAndView createPost(HttpSession session
+			, @RequestParam("postId") int id
+			, @RequestParam("reply") String reply) {
+		ModelAndView mv = new ModelAndView();
+		User user = (User) session.getAttribute("user");
+		User poster = dao.getUser(id); 
+		Post post = dao.getPost(poster, id); 
+		Post userReply = new Post(); 
+		
+		userReply.setCategory(post.getCategory());
+		mv.setViewName(post.getCategory());
+		userReply.setMessage(reply);
+		userReply.setPostID(dao.getPostTotal()+1);
+		userReply.setUserId(user.getId());
+		userReply.setUserName(user.getUserName());
+		userReply.setTitle("reply to: "+post.getUserName() + ": " + post.getTitle());
+		userReply.setPostStamp(LocalDate.now());
+		
+		post.getReplies().add(userReply);
+		user.getPosts().put(userReply.getPostID(), post); 
+		mv.addObject("posts", dao.getPostsByCategory(post.getCategory())); 
+		return new ModelAndView("redirect: " + "AfterThoughts"); 
 	}
 }

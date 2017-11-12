@@ -7,6 +7,7 @@
 <title></title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
     integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
@@ -43,15 +44,16 @@
             </ul>
         </div>
     </nav>
-    <ul class="nav nav-pills" style="margin-top:20px; margin-left:5px;">
-        <li class="nav-item"><a class="nav-link active" href="userLogIn.do">${userName}</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="goToUserAddAccount.do">Add account</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="userLogOut.do">Log out</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="goToUserCreatePost.do">Create Post</a>
-        </li>
+    <ul class="nav nav-pills"
+        style="margin-top: 20px; margin-left: 5px;">
+        <li class="nav-item"><a class="nav-link active"
+            href="userLogIn.do">${userName}</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="goToUserAddAccount.do">Add account</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="userLogOut.do">Log out</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="goToUserCreatePost.do">Create Post</a></li>
     </ul>
     <ul class="nav nav-pills nav-fill" style="margin-top: 20px;">
         <li class="nav-item"><a class="nav-link" href="browse.do">Browse</a></li>
@@ -67,17 +69,57 @@
     <div class="row justify-content-center" style="margin-top: 20px;">
         <ul>
             <c:forEach var="p" items="${posts}">
-                <ul class="justify-container-center"
-                    style="margin: 20px;">
-                    <li class="list-group-item">${p.userName}
-                        posted ${p.title } on ${p.postStamp }</li>
-                    <li class="list-group-item"><textarea rows="10"
-                            cols="100" placeholder="${p.message}"
-                            readonly></textarea></li>
-                    <li class="list-group-item"><input
-                        type="submit" value="reply"
-                        class="btn btn-primary" /></li>
-                </ul>
+                <form action="goToReply.do" method="Post">
+                <input type="hidden" name="postId" value="${p.postID}"/>
+                    <ul class="justify-container-center"
+                        style="margin: 20px;">
+                        <li class="list-group-item">${p.userName}
+                            posted ${p.title } on ${p.postStamp }</li>
+                        <li class="list-group-item"><textarea
+                                rows="4" cols="100"
+                                placeholder="${p.message}"
+                                 readonly></textarea></li>
+                        <li class="list-group-item">
+                            <ul class="list-group">
+                                <c:forEach var="reply"
+                                    items="${p.replies}">
+                                    <li class="list-group-item">
+                                    <h4>${reply.title } on ${reply.postStamp }</h4>
+                                        <p>${reply.userName}: ${reply.message}<p> 
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="btn-group">
+                                <button type="button"
+                                    class="btn btn-danger dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Reply</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item">
+                                        <textarea rows="2" cols="40"
+                                            name="reply"></textarea>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                   <div class="dropdown-item">
+                                   <input type="submit"
+                                            value="post message"
+                                            class="btn btn-primary" />
+                                   </div> 
+                                </div>
+                            </div>
+                        </li>
+
+<!--                         <li class="list-group-item"><input
+                            type="submit" value="reply"
+                            class="btn btn-primary" /></li> -->
+
+                        </ul>
+                </form>
+
             </c:forEach>
         </ul>
     </div>

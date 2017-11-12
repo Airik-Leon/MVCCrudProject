@@ -43,15 +43,16 @@
             </ul>
         </div>
     </nav>
-    <ul class="nav nav-pills" style="margin-top:20px; margin-left:5px;">
-        <li class="nav-item"><a class="nav-link active" href="userLogIn.do">${userName}</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="goToUserAddAccount.do">Add account</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="userLogOut.do">Log out</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="goToUserCreatePost.do">Create Post</a>
-        </li>
+    <ul class="nav nav-pills"
+        style="margin-top: 20px; margin-left: 5px;">
+        <li class="nav-item"><a class="nav-link active"
+            href="userLogIn.do">${userName}</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="goToUserAddAccount.do">Add account</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="userLogOut.do">Log out</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="goToUserCreatePost.do">Create Post</a></li>
     </ul>
     <ul class="nav nav-pills nav-fill" style="margin-top: 20px;">
         <li class="nav-item"><a class="nav-link" href="browse.do">Browse</a></li>
@@ -74,9 +75,26 @@
                     <li class="list-group-item"><textarea rows="10"
                             cols="100" placeholder="${p.message}"
                             readonly></textarea></li>
-                    <li class="list-group-item"><input
-                        type="submit" value="reply"
-                        class="btn btn-primary" /></li>
+                    <li class="list-group-item">
+                        <div class="btn-group">
+                            <button type="button"
+                                class="btn btn-danger dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">Reply</button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#"> <textarea
+                                        rows="2" cols="40" name="reply" autofocus></textarea>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-item">
+                                    <input type="submit"
+                                        value="post message"
+                                        class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </c:forEach>
         </ul>

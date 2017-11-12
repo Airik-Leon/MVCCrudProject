@@ -104,8 +104,7 @@ public class BlogDAOImpl implements PostDAO {
 	@Override
 	public Post getPost(User user, int id) {
 		User currentUser = userMap.get(user.getId()); 
-		currentUser.getPosts().get(id); 
-		return null;
+		return currentUser.getPosts().get(id); 
 	}
 	@Override
 	public List<Post> getPosts() {
