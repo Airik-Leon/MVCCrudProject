@@ -118,7 +118,6 @@ public class BlogDAOImpl implements PostDAO {
 		id = getUsers().get(getUsers().size()-1).getId(); 
 		id++; 
 		user.setId(id);
-		System.out.println(user);
 		userCount++; 
 		userMap.put(user.getId(), user);
 		return user; 
@@ -143,7 +142,6 @@ public class BlogDAOImpl implements PostDAO {
 
 	@Override
 	public User editUser(User user) {
-		System.out.println(user);
 		return userMap.put(user.getId(), user); 
 	}
 

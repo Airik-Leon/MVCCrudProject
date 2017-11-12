@@ -49,9 +49,8 @@
                     type="text" name="password" path="password"
                     value="${result.password}"/>
                 </li>
-                <li class="list-group-item">Account Origin:<form:input
-                    type="text" name="accountOrigin" path="accountOrigin"
-                    value="${result.accountOrigin}"/>
+                <li class="list-group-item">Account Origin: 
+                    ${result.accountOrigin}
                 </li>
                 <li class="row justify-content-center"><input class="btn btn-primary" type="submit"
                     value="Update user" id="btnAdminUpdateUser" /></li>

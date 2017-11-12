@@ -2,13 +2,13 @@ package controllers;
 
 import java.time.LocalDate;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -99,7 +99,7 @@ public class AdminController {
 		return mv; 
 	}
 	@RequestMapping("searchById.do")
-	public ModelAndView adminsearchById(@RequestParam("id")int id) {
+	public ModelAndView adminsearchById(@RequestParam("id")int id, HttpSession session) {
 		ModelAndView mv = new ModelAndView("userInfo");
 		User user = dao.getUser(id); 
 		if(user == null) {
@@ -107,11 +107,12 @@ public class AdminController {
 			mv.addObject("result", result);
 			return mv; 
 		}
+		session.setAttribute("result", user);
 		mv.addObject("result", user ); 
 		return mv; 
 	}
 	@RequestMapping("searchByUserName.do")
-	public ModelAndView adminSearchByUserName(@RequestParam("userName") String username) {
+	public ModelAndView adminSearchByUserName(@RequestParam("userName") String username, HttpSession session) {
 		ModelAndView mv = new ModelAndView("userInfo"); 
 		User user = dao.getUserByUserName(username); 
 		if(user == null) {
@@ -119,28 +120,25 @@ public class AdminController {
 			mv.addObject("result", null);
 			return mv;
 		}
+		session.setAttribute("result", user);
 		mv.addObject("result", user); 
 		return mv; 
 	}
 	@RequestMapping("goToUpdateUser.do")
-	public String goToUpdateUser(@RequestParam("id") int id, Model model) {
-		User result = dao.getUser(id);
+	public String goToUpdateUser(Model model) {
 		User user = new User(); 
-		model.addAttribute("result", result); 
 		model.addAttribute("user", user); 
 		return "updateUser"; 
 	}
 	
 	@RequestMapping("updateUser.do")
-	public ModelAndView updateUser(@RequestParam("id") int id
-			, @RequestParam("userName") String userName
-			, @RequestParam("firstName")String firstName
-			, @RequestParam("lastName")String lastName
-			, @RequestParam("password")String password
-			, @RequestParam("accountOrigin")LocalDate accountOrigin) {
-		ModelAndView mv = new ModelAndView("userInfo"); 
-		User user = new User(id, firstName, lastName, userName, password, accountOrigin);
+	public ModelAndView updateUser(User user) {
+		ModelAndView mv = new ModelAndView("admin"); 
 		dao.editUser(user); 
+		int userCount = dao.getUserTotal(); 
+		int postCount = dao.getPostTotal(); 
+		mv.addObject("userCount", userCount); 
+		mv.addObject("postCount", postCount); 
 		mv.addObject("user", user); 
 		return mv; 
 	}
