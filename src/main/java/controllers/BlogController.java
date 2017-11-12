@@ -19,9 +19,7 @@ public class BlogController {
 	//Routing to pages
 	@RequestMapping(path="splash.do", method=RequestMethod.GET)
 	public ModelAndView splash() {
-		ModelAndView mv = new ModelAndView();
-		List<User> test = dao.getUsers(); 
-		mv.addObject("list", test.get(0)); 
+		ModelAndView mv = new ModelAndView(); 
 		mv.setViewName("splash");
 		return mv; 
 	}
@@ -31,7 +29,6 @@ public class BlogController {
 	}
 	@RequestMapping(path="admin.do", method=RequestMethod.GET)
 	public String admin() {
-		return "admin"; 
+		return "adminLogIn"; 
 	}
-	
 }

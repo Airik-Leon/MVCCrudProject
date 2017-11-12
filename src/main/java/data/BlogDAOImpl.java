@@ -23,6 +23,7 @@ public class BlogDAOImpl implements PostDAO {
 	private Map<Integer, User> userMap; 
 	private static int userCount = 0; 
 	private static int postCount = 0; 
+	private int id = 0; 
 	
 	@Autowired
 	private WebApplicationContext wac;
@@ -63,12 +64,9 @@ public class BlogDAOImpl implements PostDAO {
 	private void initPosts() {
 		// Retrieve an input stream from the servlet context
 		// rather than directly from the file system
-		try{
-//			File  filename = new File(POSTS); 
-//			FileReader fr = new FileReader(filename); 
+		try{ 
 			InputStream is = wac.getServletContext().getResourceAsStream("/WEB-INF/resources/posts.txt");
 			BufferedReader buf = new BufferedReader(new InputStreamReader(is));
-//			BufferedReader buf = new BufferedReader(fr); 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM"); 
 
 			String line; 
@@ -117,13 +115,30 @@ public class BlogDAOImpl implements PostDAO {
 
 	@Override
 	public User createUser(User user) {
-		return userMap.put(user.getId(), user); 
+		id = getUsers().get(getUsers().size()-1).getId(); 
+		id++; 
+		user.setId(id);
+		System.out.println(user);
+		userCount++; 
+		userMap.put(user.getId(), user);
+		return user; 
 	}
 
 	@Override
 	public User getUser(int id) {
 		User user = userMap.get(id); 
 		return user;
+	}
+	@Override
+	public User getUserByUserName(String name) {
+		List<User> list = getUsers(); 
+		User temp =null; 
+		for (User user : list) {
+			if(name.trim().equals(user.getUserName())){
+				temp = user; 
+			}
+		}
+		return temp; 
 	}
 
 	@Override
@@ -133,11 +148,17 @@ public class BlogDAOImpl implements PostDAO {
 
 	@Override
 	public User deleteUser(User user) {
+		System.out.println(user);
 		return userMap.remove(user.getId()); 
 	}
 	@Override
 	public List<User> getUsers(){
 		return new ArrayList<User>(userMap.values()); 
 	}
-
+	public int getUserTotal() {
+		return getUsers().size(); 
+	}
+	public int getPostTotal() {
+		return BlogDAOImpl.postCount; 
+	}
 }

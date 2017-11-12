@@ -1,12 +1,57 @@
-/* @charset "UTF-8";
+@charset "UTF-8";
+/* General Page */
 html, body{
-	height: 100%; 
-	weight: auto; 
+	height: 100%;
+	width:100%;
+}
+/* Splash page  */
+#splashDiv{
+  margin-top:200px;
+}
+#admin, #guest{
+	margin:10px;
+	width:200px;
+}
+/* Admin home page  */
+#totalUsers, #totalPosts{
+	border:1px solid silver; 
+	padding: 10px; 
+}
+/* Admin userInfo Page  */
+#btnAdminUpdateUser, #btnAdminDeleteUser{
+	margin:10px; 
+	width:200px;
 }
 
-#admin, #guest{
-	background-color:white; ; 
-	border: 1px solid green; 
-	border-radius: 5px; 
-	color:white;
-} */
+
+
+
+/* Stick Footer */
+html {
+	position: relative;
+	min-height: 100%;
+}
+body {
+	margin-bottom: 60px; /* Margin bottom by footer height */
+}
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: auto; /* Set the fixed height of the footer here */
+	line-height: 60px; /* Vertically center the text there */
+	background-color: #f5f5f5;
+}
+footer img{
+		height: 50px;
+		width:50px;
+}
+.navbar a img{
+	background-color:white; 
+	height: 50px;
+	width:50px;
+	/* border-radius: 30px; */
+}
+.navbar ul li a{
+	font-size:24pt;
+}

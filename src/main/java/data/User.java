@@ -4,11 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class User {
 	private int id; 
+	@Size(min=2, max=20)
 	private String firstName;
+	@Size(min=2, max=20)
 	private String lastName; 
+	@Size(min=5, max=10, message="user names must be at least 5 characters")
 	private String userName; 
+	@Size(min=8, max=20, message="password must be at least 8 characters")
 	private String password; 
 	private LocalDate accountOrigin;
 	private Map<Integer, Post> posts; 
@@ -23,6 +30,21 @@ public class User {
 		this.userName = userName;
 		this.password = password;
 		this.accountOrigin = accountOrigin;
+	}
+	public User(String firstName, String lastName,  String userName, String password, LocalDate accountOrigin) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName; 
+		this.userName = userName;
+		this.password = password;
+		this.accountOrigin = accountOrigin;
+	}
+	public User(String firstName, String lastName,  String userName, String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName; 
+		this.userName = userName;
+		this.password = password;
 	}
 	
 	public User(int id, String firstName, String lastName, String userName, String password, LocalDate accountOrigin, Map<Integer,Post> posts) {

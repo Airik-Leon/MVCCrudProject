@@ -14,4 +14,7 @@ public interface PostDAO {
 	public User editUser(User user); //update
 	public User deleteUser(User user); //delete
 	List<User> getUsers();
+	User getUserByUserName(String name);
+	int getUserTotal();
+	int getPostTotal();
 }
