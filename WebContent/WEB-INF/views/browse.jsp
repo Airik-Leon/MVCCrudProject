@@ -42,6 +42,14 @@
             </ul>
         </div>
     </nav>
+    <ul class="nav nav-pills" style="margin-top:20px; margin-left:5px;">
+        <li class="nav-item"><a class="nav-link active" href="userLogIn.do">${userName}</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="goToUserAddAccount.do">Add account</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="userLogOut.do">Log out</a>
+        </li>
+    </ul>
     <ul class="nav nav-pills nav-fill" style="margin-top: 20px;">
         <li class="nav-item"><a class="nav-link active"
             href="browse.do">Browse</a></li>

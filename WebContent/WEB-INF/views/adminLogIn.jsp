@@ -28,7 +28,8 @@
             id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active"><a class="nav-link"
-                    href="http://airikleon.io">home <span class="sr-only">(current)</span>
+                    href="http://airikleon.io">home <span
+                        class="sr-only">(current)</span>
                 </a></li>
                 <li class="nav-item"><a class="nav-link"
                     href="about.html">about</a></li>
@@ -42,6 +43,15 @@
             </ul>
         </div>
     </nav>
+    <ul class="nav nav-pills"
+        style="margin-top: 20px; margin-left: 5px;">
+        <li class="nav-item"><a class="nav-link active"
+            href="userLogIn.do">${userName}</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="goToUserAddAccount.do">Add account</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="userLogOut.do">Log out</a></li>
+    </ul>
     <div class="row justify-content-center">
         <div>
             <h2>Admin log-in</h2>

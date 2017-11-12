@@ -43,9 +43,16 @@
             </ul>
         </div>
     </nav>
+    <ul class="nav nav-pills" style="margin-top:20px; margin-left:5px;">
+        <li class="nav-item"><a class="nav-link active" href="userLogIn.do">${userName}</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="goToUserAddAccount.do">Add account</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="userLogOut.do">Log out</a>
+        </li>
+    </ul>
     <ul class="nav nav-pills nav-fill" style="margin-top: 20px;">
-        <li class="nav-item"><a class="nav-link"
-            href="browse.do">Browse</a></li>
+        <li class="nav-item"><a class="nav-link" href="browse.do">Browse</a></li>
         <li class="nav-item"><a class="nav-link"
             href="goToAfterThoughts.do">After thoughts </a></li>
         <li class="nav-item"><a class="nav-link"
@@ -60,7 +67,8 @@
             <c:forEach var="p" items="${posts}">
                 <ul class="justify-container-center"
                     style="margin: 20px;">
-                    <li class="list-group-item">${p.userName} posted ${p.title } on ${p.postStamp }</li>
+                    <li class="list-group-item">${p.userName}
+                        posted ${p.title } on ${p.postStamp }</li>
                     <li class="list-group-item"><textarea rows="10"
                             cols="100" placeholder="${p.message}"
                             readonly></textarea></li>

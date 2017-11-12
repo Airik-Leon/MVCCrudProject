@@ -106,4 +106,13 @@ public class UserController {
 		ModelAndView mv = new ModelAndView(); 
 		return mv; 
 	}
+	@RequestMapping("userLogOut")
+	public ModelAndView logOut(HttpSession session) {
+		ModelAndView mv = new ModelAndView("splash"); 
+		session.setAttribute("user", null);
+		session.setAttribute("userName", "Log-in");
+		session.setAttribute("admin", "Admin log-in");
+		return mv; 
+	}
+	
 }

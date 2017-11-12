@@ -49,7 +49,7 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="goToUserAddAccount.do">Add account</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="#">ManageAccount</a>
+        <li class="nav-item"><a class="nav-link" href="userLogOut.do">Log out</a>
         </li>
     </ul>
     <h1 class="row justify-content-center">Hello Internet</h1>
