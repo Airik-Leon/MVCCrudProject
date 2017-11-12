@@ -22,10 +22,6 @@
             href="goToCreateUser.do">Create User</a></li>
         <li class="nav-item"><a class="nav-link active" href="#">Get
                 User</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Update
-                User</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Delete
-                User</a></li>
     </ul>
     <div class="row justify-content-center" style="margin-top:50px;">
         <form:form action="updateUser.do" method="POST" modelAttribute="user">

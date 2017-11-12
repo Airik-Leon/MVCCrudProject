@@ -21,10 +21,6 @@
             href="goToCreateUser.do">Create User</a></li>
         <li class="nav-item"><a class="nav-link"
             href="goToUserInfo.do">Get User</a></li>
-        <li class="nav-item"><a class="nav-link"
-            href="goToUpdateUser.do">Update User</a></li>
-        <li class="nav-item"><a class="nav-link"
-            href="goToDeleteUser.do">Delete User</a></li>
     </ul>
     <div class="row justify-content-center">
         <form:form action="createUser.do" method="POST"

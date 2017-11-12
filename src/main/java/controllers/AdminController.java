@@ -1,6 +1,8 @@
 package controllers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -21,7 +23,7 @@ public class AdminController {
 	private final static  String NOT_EXIST = "User does not exist try again"; 
 	@Autowired
 	private PostDAO dao; 
-	
+	private List<String> activityLog = new ArrayList<>(); 
 	//Page routing 
 	@RequestMapping("log-in.do")
 	public ModelAndView crud(@RequestParam("userName")String userName
@@ -74,6 +76,7 @@ public class AdminController {
 	@RequestMapping(path="createUser.do" , method=RequestMethod.POST)
 	public ModelAndView createUser(@Valid User user, Errors e) 
 	{
+		StringBuilder sb = new StringBuilder(); 
 		ModelAndView mv = new ModelAndView("createUser"); 
 		if(e.hasErrors()) {
 			mv.addObject("error", "You must fill out all fields");
@@ -90,9 +93,15 @@ public class AdminController {
 		}
 //		user.setId(dao.getUsers().get(dao.getUsers().size()-1).getId() + 1);
 		user.setAccountOrigin(LocalDate.now());
-		dao.createUser(user); 
+		dao.createUser(user);
+		sb.append("Date: "); 
+		sb.append(LocalDate.now()); 
+		sb.append(user.toString()); 
+		sb.append(" created"); 
+		activityLog.add(sb.toString()); 
 		int  userCount = dao.getUserTotal(); 
-		int postCount = dao.getPostTotal(); 
+		int postCount = dao.getPostTotal();
+		mv.addObject("activityLog", activityLog); 
 		mv.addObject("userCount", userCount);
 		mv.addObject("postCount", postCount);
 		mv.setViewName("admin");
@@ -133,10 +142,18 @@ public class AdminController {
 	
 	@RequestMapping("updateUser.do")
 	public ModelAndView updateUser(User user) {
+		StringBuilder sb = new StringBuilder(); 
 		ModelAndView mv = new ModelAndView("admin"); 
 		dao.editUser(user); 
 		int userCount = dao.getUserTotal(); 
 		int postCount = dao.getPostTotal(); 
+		
+		sb.append("Date: "); 
+		sb.append(LocalDate.now()); 
+		sb.append(user.toString()); 
+		sb.append(" updated"); 
+		activityLog.add(sb.toString()); 
+		mv.addObject("activityLog", activityLog); 
 		mv.addObject("userCount", userCount); 
 		mv.addObject("postCount", postCount); 
 		mv.addObject("user", user); 
@@ -144,11 +161,19 @@ public class AdminController {
 	}
 	@RequestMapping("deleteUser.do")
 	public ModelAndView deleteUser(@RequestParam("id") int id) {
+		StringBuilder sb = new StringBuilder(); 
 		ModelAndView mv = new ModelAndView();
 		User user = dao.getUser(id); 
 		mv.addObject("logDelete", dao.deleteUser(user));
 		int postCount = dao.getPostTotal(); 
 		int userCount = dao.getUserTotal(); 
+		
+		sb.append("Date: "); 
+		sb.append(LocalDate.now()); 
+		sb.append(user.toString()); 
+		sb.append(" deleted"); 
+		activityLog.add(sb.toString());
+		mv.addObject("activityLog", activityLog); 
 		mv.addObject("postCount", postCount); 
 		mv.addObject("userCount", userCount); 
 		mv.setViewName("admin");

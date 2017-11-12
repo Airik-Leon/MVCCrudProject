@@ -20,10 +20,6 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="goToUserInfo.do">Get User</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="goToUpdateUser.do">Update User</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="goToDeleteUser.do">Delete User</a>
-        </li>
     </ul>
     <div class="row justify-content-center" id="totalUsers">
         <h6>Total Users: </h6><br>
@@ -32,6 +28,14 @@
     <div class="row justify-content-center" id="totalPosts">
         <h6>Total Posts: </h6><br>
         <p>${postCount}</p>
+    </div>
+    <div class="row justify-content-center">
+    <h4>ActivityLog</h4>
+    </div>
+    <div class="row justify-content-center">
+        <c:forEach var="log" items="${activityLog}">
+        <p>${log}</p>
+        </c:forEach>
     </div>
     
     

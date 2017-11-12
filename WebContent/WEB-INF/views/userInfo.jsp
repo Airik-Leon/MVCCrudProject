@@ -22,10 +22,6 @@
             href="goToCreateUser.do">Create User</a></li>
         <li class="nav-item"><a class="nav-link active" href="#">Get
                 User</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Update
-                User</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Delete
-                User</a></li>
     </ul>
     <div class="row justify-content-center">
         <form action="searchById.do" method="POST">
