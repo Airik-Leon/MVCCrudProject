@@ -9,6 +9,7 @@ public class Post {
 	private String message; 
 	private LocalDate postStamp; 
 	private int userId;
+	private String userName; 
 	private String category; 
 	private List<Post> replies; 
 	
@@ -79,6 +80,12 @@ public class Post {
 		this.category = category;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

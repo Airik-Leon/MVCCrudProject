@@ -18,4 +18,5 @@ public interface PostDAO {
 	int getUserTotal();
 	int getPostTotal();
 	List<Post> getPosts();
+	List<Post> getPostsByCategory(String category);
 }

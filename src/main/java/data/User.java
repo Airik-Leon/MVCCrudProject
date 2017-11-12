@@ -1,10 +1,10 @@
 package data;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class User {
@@ -20,7 +20,7 @@ public class User {
 	private LocalDate accountOrigin;
 	private Map<Integer, Post> posts; 
 	public User() {
-		
+		posts = new HashMap<>(); 
 	}
 	public User(int id, String firstName, String lastName,  String userName, String password, LocalDate accountOrigin) {
 		super();
@@ -30,6 +30,8 @@ public class User {
 		this.userName = userName;
 		this.password = password;
 		this.accountOrigin = accountOrigin;
+		posts = new HashMap<>(); 
+
 	}
 	public User(String firstName, String lastName,  String userName, String password, LocalDate accountOrigin) {
 		super();
@@ -38,6 +40,7 @@ public class User {
 		this.userName = userName;
 		this.password = password;
 		this.accountOrigin = accountOrigin;
+		posts = new HashMap<>(); 
 	}
 	public User(String firstName, String lastName,  String userName, String password) {
 		super();
@@ -45,6 +48,8 @@ public class User {
 		this.lastName = lastName; 
 		this.userName = userName;
 		this.password = password;
+		posts = new HashMap<>(); 
+
 	}
 	
 	public User(int id, String firstName, String lastName, String userName, String password, LocalDate accountOrigin, Map<Integer,Post> posts) {

@@ -43,10 +43,29 @@
             </ul>
         </div>
     </nav>
-    
-    <c:forEach var="p" items="posts">
-    <p>p</p>
-    </c:forEach>
+    <ul class="nav nav-pills nav-fill" style="margin-top: 20px;">
+        <li class="nav-item"><a class="nav-link"
+            href="browse.do">Browse</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="goToAfterThoughts.do">After thoughts </a></li>
+        <li class="nav-item"><a class="nav-link active"
+            href="goToArticles.do">Articles</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="goToPhotography.do">Photography</a></li>
+        <li class="nav-item"><a class="nav-link "
+            href="goToAllMessages.do">All Messages</a></li>
+    </ul>
+    <div class="row justify-content-center" style="margin-top:20px;">
+        <ul>
+        <c:forEach var="p" items="${posts}">
+        <ul class="justify-container-center" style="margin:20px;">
+            <li class="list-group-item">${p.userName} posted ${p.title } on ${p.postStamp }</li>
+            <li class="list-group-item"><textarea rows="10" cols="100" placeholder="${p.message}" readonly></textarea></li>
+            <li class="list-group-item"><input type="submit" value="reply" class="btn btn-primary"/></li>
+        </ul>
+        </c:forEach>
+        </ul>
+    </div>
     <footer class="footer">
         <div class="container">
             <div class="row">

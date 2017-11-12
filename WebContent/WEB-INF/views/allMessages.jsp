@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,6 @@
     integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
     crossorigin="anonymous">
 <link rel="stylesheet" href="./css/site.css" />
-
 </head>
 <body>
     <nav class="navbar navbar-dark bg-primary">
@@ -44,7 +44,7 @@
         </div>
     </nav>
     <ul class="nav nav-pills nav-fill" style="margin-top: 20px;">
-        <li class="nav-item"><a class="nav-link active"
+        <li class="nav-item"><a class="nav-link"
             href="browse.do">Browse</a></li>
         <li class="nav-item"><a class="nav-link"
             href="goToAfterThoughts.do">After thoughts </a></li>
@@ -52,71 +52,24 @@
             href="goToArticles.do">Articles</a></li>
         <li class="nav-item"><a class="nav-link"
             href="goToPhotography.do">Photography</a></li>
-        <li class="nav-item"><a class="nav-link"
+        <li class="nav-item"><a class="nav-link active"
             href="goToAllMessages.do">All Messages</a></li>
     </ul>
-    <div class="container">
-        <h1 class="row justify-content-center">Categories</h1>
-        <div class="row justify-content-center">
-            <div class="col-sm">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="./images/project.png"
-                        alt="Card image cap" style="height: 300px;">
-                    <div class="card-body">
-                        <h4 class="card-title">Projects after
-                            thoughts</h4>
-                        <p class="card-text">My thoughts on the
-                            projects I have worked on and how I feel
-                            about various software engineering topics.</p>
-                        <a href="goToAfterThoughts.do"
-                            class="btn btn-primary">Go </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="./images/cgpGrey.png"
-                        alt="Card image cap" style="height: 300px;">
-                    <div class="card-body">
-                        <h4 class="card-title">Articles</h4>
-                        <p class="card-text">I first started college
-                            wanting to do journalism. Somehow I ended
-                            studying Software Engineering.</p>
-                        <a href="goToArticles.do"
-                            class="btn btn-primary">Go </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm" style="height: 500px">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="./images/photo.png"
-                        alt="Card image cap" style="height: 300px">
-                    <div class="card-body">
-                        <h4 class="card-title">Photography</h4>
-                        <p class="card-text">My work as a
-                            photographer. A hobby I don't practice
-                            enough of but I will always enjoy the
-                            landscapes when I can.</p>
-                        <a href="goToPhotography.do"
-                            class="btn btn-primary">Go </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm" style="height: 500px">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top"
-                        src="./images/allMessages.png"
-                        alt="Card image cap" style="height: 300px">
-                    <div class="card-body">
-                        <h4 class="card-title">All Messages</h4>
-                        <p class="card-text">Everything in one
-                            place.</p>
-                        <a href="goToAllMessages.do"
-                            class="btn btn-primary">Go </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="row justify-content-center" style="margin-top: 20px;">
+        <ul>
+            <c:forEach var="p" items="${posts}">
+                <ul class="justify-container-center"
+                    style="margin: 20px;">
+                    <li class="list-group-item">${p.userName} posted ${p.title } on ${p.postStamp }</li>
+                    <li class="list-group-item"><textarea rows="10"
+                            cols="100" placeholder="${p.message}"
+                            readonly></textarea></li>
+                    <li class="list-group-item"><input
+                        type="submit" value="reply"
+                        class="btn btn-primary" /></li>
+                </ul>
+            </c:forEach>
+        </ul>
     </div>
     <footer class="footer">
         <div class="container">

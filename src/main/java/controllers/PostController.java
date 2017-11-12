@@ -27,15 +27,16 @@ public class PostController {
 	}
 	@RequestMapping("createPost.do")
 	public ModelAndView createPost(Post post, HttpSession session) {
-		ModelAndView mv = new ModelAndView(""+post.getCategory());
+		ModelAndView mv = new ModelAndView(post.getCategory().toString());
 		post.setPostStamp(LocalDate.now());
 		User user = (User) session.getAttribute("user"); 
 		int postId = dao.getPostTotal()+1; 
 		post.setPostID(postId);
+		post.setUserName(user.getUserName());
 		post.setUserId(user.getId());
 		System.out.println(post);
 		dao.createPost(post); 
-		mv.addObject("posts", dao.getPosts()); 
+		mv.addObject("posts", dao.getPostsByCategory(post.getCategory())); 
 		return mv; 
 	}
 }

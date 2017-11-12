@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiPredicate;
 
 import javax.annotation.PostConstruct;
 
@@ -77,7 +78,10 @@ public class BlogDAOImpl implements PostDAO {
 				String message = tokens[2].trim();
 				LocalDate accountOrigin = LocalDate.parse(tokens[3].trim(), formatter); 
 				int userId  = Integer.parseInt(tokens[4].trim());
+				String category = tokens[5].trim(); 
 				Post post = new Post(postId, title, message, accountOrigin, userId); 
+				post.setCategory(category);
+				post.setUserName(getUser(userId).getUserName());
 				postCount++; 
 				userMap.get(post.getUserId()).getPosts().put(post.getPostID(), post); 
 				postMap.put(post.getPostID(), post); 
@@ -163,5 +167,23 @@ public class BlogDAOImpl implements PostDAO {
 	}
 	public int getPostTotal() {
 		return BlogDAOImpl.postCount; 
+	}
+	@Override
+	public List<Post> getPostsByCategory(String category){
+		BiPredicate<Post, String> filterByCategory =
+				( p, s)-> p.getCategory().equals(s); 
+		return this.filter(filterByCategory, category); 
+	}
+	private List<Post> filter(BiPredicate<Post, String> matcher, String category){
+		List<Post> filtered = new ArrayList<>(); 
+		List<Post> list = getPosts(); 
+		for (Post post : list) {
+			System.out.println(post);
+			System.out.println(category);
+			if(matcher.test(post, category)) {
+				filtered.add(post); 
+			}
+		}
+		return filtered; 
 	}
 }
