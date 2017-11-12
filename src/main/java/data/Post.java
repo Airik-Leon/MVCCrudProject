@@ -23,7 +23,6 @@ public class Post {
 		this.postStamp = postStamp;
 		this.userId = userId; 
 	}
-
 	public int getPostID() {
 		return postID;
 	}

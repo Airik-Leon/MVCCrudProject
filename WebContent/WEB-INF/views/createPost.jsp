@@ -53,27 +53,36 @@
         <li class="nav-item"><a class="nav-link"
             href="goToUserInfo.do">Get User</a></li>
         <li class="nav-item"><a class="nav-link"
-            href="goToCreatePost.do"> Create Post</a></li>
+            href="createPost.do"> Create Post</a></li>
     </ul>
-    <div class="row justify-content-center" id="totalUsers">
-        <h6>Total Users:</h6>
-        <br>
-        <p>${userCount}</p>
-    </div>
-    <div class="row justify-content-center" id="totalPosts">
-        <h6>Total Posts:</h6>
-        <br>
-        <p>${postCount}</p>
-    </div>
-    <div class="row justify-content-center">
-        <h4>ActivityLog</h4>
-    </div>
-    <div class="row justify-content-center">
-        <c:forEach var="log" items="${activityLog}">
-            <p>${log}</p>
-        </c:forEach>
-    </div>
+    <h1 class="row justify-content-center">Create a post</h1>
+    <div class="container justify-content-center" style="margin-top:50px">
+        <form action="createPost.do" method="POST">
+            <div class="form-group">
+                <label for="title">Title
+                    </label> <input type="text" class="form-control"
+                    id="title" name="name"
+                    placeholder="title">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Category
+                    </label> <select class="form-control"
+                    id="category" name="category">
+                    <option>AfterThoughts</option>
+                    <option>Articles</option>
+                    <option>Photograpy</option>
+                </select>
+            </div>
 
+            <div class="form-group">
+                <label for="message">Message
+                    </label>
+                <textarea class="form-control"
+                    id="message" name="message"rows="4"></textarea>
+            </div>
+            <input type="submit" class="btn btn-success justify-content-center" value="Post Message" />
+        </form>
+    </div>
     <footer class="footer">
         <div class="container">
             <div class="row">
