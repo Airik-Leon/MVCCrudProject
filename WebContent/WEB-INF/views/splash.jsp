@@ -51,6 +51,8 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="userLogOut.do">Log out</a>
         </li>
+        <li class="nav-item"><a class="nav-link" href="goToUserCreatePost.do">Create Post</a>
+        </li>
     </ul>
     <h1 class="row justify-content-center">Hello Internet</h1>
     <div class="row justify-content-center" id="splashDiv">

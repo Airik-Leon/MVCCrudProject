@@ -71,7 +71,7 @@
                     id="category" name="category" path="category">
                     <option>AfterThoughts</option>
                     <option>Articles</option>
-                    <option>Photograpy</option>
+                    <option>Photography</option>
                 </form:select>
             </div>
 

@@ -43,12 +43,14 @@
             </ul>
         </div>
     </nav>
-     <ul class="nav nav-pills" style="margin-top:20px; margin-left:5px;">
+    <ul class="nav nav-pills" style="margin-top:20px; margin-left:5px;">
         <li class="nav-item"><a class="nav-link active" href="userLogIn.do">${userName}</a>
         </li>
         <li class="nav-item"><a class="nav-link" href="goToUserAddAccount.do">Add account</a>
         </li>
         <li class="nav-item"><a class="nav-link" href="userLogOut.do">Log out</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="goToUserCreatePost.do">Create Post</a>
         </li>
     </ul>
     <ul class="nav nav-pills nav-fill" style="margin-top: 20px;">

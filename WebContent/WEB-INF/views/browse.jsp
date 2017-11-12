@@ -49,6 +49,8 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="userLogOut.do">Log out</a>
         </li>
+        <li class="nav-item"><a class="nav-link" href="goToUserCreatePost.do">Create Post</a>
+        </li>
     </ul>
     <ul class="nav nav-pills nav-fill" style="margin-top: 20px;">
         <li class="nav-item"><a class="nav-link active"
