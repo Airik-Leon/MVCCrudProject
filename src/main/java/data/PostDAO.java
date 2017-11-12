@@ -17,4 +17,5 @@ public interface PostDAO {
 	User getUserByUserName(String name);
 	int getUserTotal();
 	int getPostTotal();
+	List<Post> getPosts();
 }

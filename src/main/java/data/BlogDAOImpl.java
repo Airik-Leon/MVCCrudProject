@@ -1,8 +1,6 @@
 package data;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
@@ -21,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 public class BlogDAOImpl implements PostDAO {
 	
 	private Map<Integer, User> userMap; 
+	private Map<Integer, Post>	postMap;
 	private static int userCount = 0; 
 	private static int postCount = 0; 
 	private int id = 0; 
@@ -31,6 +30,7 @@ public class BlogDAOImpl implements PostDAO {
 	
 	public BlogDAOImpl(){
 		userMap = new HashMap<>(); 
+		postMap = new HashMap<>(); 
 		initUsers(); 
 		initPosts(); 
 	}
@@ -80,6 +80,7 @@ public class BlogDAOImpl implements PostDAO {
 				Post post = new Post(postId, title, message, accountOrigin, userId); 
 				postCount++; 
 				userMap.get(post.getUserId()).getPosts().put(post.getPostID(), post); 
+				postMap.put(post.getPostID(), post); 
 			}
 		} catch (Exception e) {
 			System.err.println(e);
@@ -91,16 +92,20 @@ public class BlogDAOImpl implements PostDAO {
 	@Override
 	public Post createPost(Post post) {
 		User user = userMap.get(post.getUserId()); 
+		postMap.put(post.getPostID(), post);
+		postCount++;
 		return user.getPosts().put(post.getPostID(), post); 
 	}
-
 	@Override
 	public Post getPost(User user, int id) {
 		User currentUser = userMap.get(user.getId()); 
 		currentUser.getPosts().get(id); 
 		return null;
 	}
-
+	@Override
+	public List<Post> getPosts() {
+		return new ArrayList<Post>(postMap.values()); 
+	}
 	@Override
 	public Post editPost(Post post) {
 		User user = userMap.get(post.getUserId()); 

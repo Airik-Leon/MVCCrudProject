@@ -27,7 +27,7 @@ public class AdminController {
 	//Page routing 
 	@RequestMapping("log-in.do")
 	public ModelAndView crud(@RequestParam("userName")String userName
-			, @RequestParam("password")String pw) {
+			, @RequestParam("password")String pw, HttpSession session) {
 		ModelAndView mv = new ModelAndView("adminLogIn");
 		User user; 
 		//Empty UserName
@@ -45,7 +45,8 @@ public class AdminController {
 		}//User exist check password
 		else if(user.getPassword().equals(pw)) { 
 			int postCount = dao.getPostTotal(); 
-			int userCount = dao.getUserTotal(); 		
+			int userCount = dao.getUserTotal(); 	
+			session.setAttribute("user", user);
 			mv.addObject("postCount", postCount); 
 			mv.addObject("userCount", userCount);
 			mv.setViewName("admin");
