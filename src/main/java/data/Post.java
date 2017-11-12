@@ -9,12 +9,12 @@ public class Post {
 	private String message; 
 	private LocalDate postStamp; 
 	private int userId;
+	private String category; 
 	private List<Post> replies; 
 	
 	public Post() {
 		
 	}
-
 	public Post(int postID, String title, String message, LocalDate postStamp, int userId) {
 		super();
 		this.postID = postID;
@@ -70,6 +70,14 @@ public class Post {
 
 	public void setReplies(List<Post> replies) {
 		this.replies = replies;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	@Override

@@ -15,7 +15,7 @@
 </head>
 <body>
     <nav class="navbar navbar-dark bg-primary">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="http://airikleon.io">
             <img class="rounded-circle" src="images/icons/GreekAlpha.ico" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">home
+                    <a class="nav-link" href="http://airikleon.io">home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -39,7 +39,7 @@
                     <a class="nav-link" href="portfolio.html">portfolio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="blog.html">blog</a>
+                    <a class="nav-link" href="splash.do">blog</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="contact.html"> contact</a>
@@ -47,6 +47,7 @@
             </ul>
         </div>
     </nav>
+    <h1 class="row justify-content-center">Welcome to da' blog</h1>
     <div class="row justify-content-center" id="splashDiv">
         <form action="admin.do" method="GET">
             <input class="btn btn-danger" id="admin" type="submit"
@@ -54,7 +55,7 @@
         </form>
         <form action="browse.do" method="GET">
             <input class="btn btn-success" id="guest" type="submit"
-                value="Guest" name="guest" />
+                value="Browse posts" name="guest" />
         </form>
     </div>
     <footer class="footer">
