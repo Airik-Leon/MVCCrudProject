@@ -43,7 +43,7 @@ public class AdminController {
 			mv.addObject("NOT_EXIST", NOT_EXIST);
 			return mv; 
 		}//User exist check password
-		else if(user.getPassword().equals(pw)) { 
+		else if(user.getPassword().equals(pw) && user.isAdmin()) { 
 			int postCount = dao.getPostTotal(); 
 			int userCount = dao.getUserTotal(); 	
 			session.setAttribute("user", user);

@@ -10,7 +10,7 @@ html, body{
 }
 #admin, #guest{
 	margin:10px;
-	width:200px;
+	width:300px;
 }
 /* Admin home page  */
 #totalUsers, #totalPosts{

@@ -47,13 +47,13 @@
     <ul class="nav nav-tabs">
         <li class="nav-item"><a class="nav-link" href="splash.do">Home</a>
         </li>
-        <li class="nav-item"><a class="nav-link active"
+        <li class="nav-item"><a class="nav-link"
             href="goToAdmin.do">Admin Home</a>
         <li class="nav-item"><a class="nav-link"
             href="goToCreateUser.do">Create User</a></li>
         <li class="nav-item"><a class="nav-link"
             href="goToUserInfo.do">Get User</a></li>
-        <li class="nav-item"><a class="nav-link"
+        <li class="nav-item"><a class="nav-link active"
             href="createPost.do"> Create Post</a></li>
     </ul>
     <h1 class="row justify-content-center">Create a post</h1>

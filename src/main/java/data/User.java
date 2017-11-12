@@ -19,6 +19,7 @@ public class User {
 	private String password; 
 	private LocalDate accountOrigin;
 	private Map<Integer, Post> posts; 
+	private boolean isAdmin= false; 
 	public User() {
 		posts = new HashMap<>(); 
 	}
@@ -107,6 +108,13 @@ public class User {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	@Override
 	public int hashCode() {

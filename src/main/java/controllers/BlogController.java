@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +18,14 @@ public class BlogController {
 	
 	//Routing to pages
 	@RequestMapping(path="splash.do", method=RequestMethod.GET)
-	public ModelAndView splash() {
-		ModelAndView mv = new ModelAndView(); 
-		mv.setViewName("splash");
+	public ModelAndView splash(HttpSession session) {
+		User user =(User) session.getAttribute("user");
+		ModelAndView mv = new ModelAndView("splash"); 
+		if(user != null && user.isAdmin()) {
+			mv.addObject("admin", user.getUserName()); 
+			return mv;
+		}
+		mv.addObject("admin", "Admin log-in");
 		return mv; 
 	}
 	@RequestMapping(path="browse.do", method=RequestMethod.GET)
@@ -32,7 +35,7 @@ public class BlogController {
 	@RequestMapping(path="admin.do", method=RequestMethod.GET)
 	public String admin(HttpSession session) {
 		User user =(User) session.getAttribute("user");
-		if(user != null) {
+		if(user != null && user.isAdmin()) {
 			return"admin";
 		}
 		return "adminLogIn"; 

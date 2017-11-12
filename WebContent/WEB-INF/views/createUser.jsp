@@ -43,12 +43,16 @@
         </div>
     </nav>
     <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link "
+        <li class="nav-item"><a class="nav-link" href="splash.do">Home</a>
+        </li>
+        <li class="nav-item"><a class="nav-link"
             href="goToAdmin.do">Admin Home</a>
         <li class="nav-item"><a class="nav-link active"
             href="goToCreateUser.do">Create User</a></li>
         <li class="nav-item"><a class="nav-link"
             href="goToUserInfo.do">Get User</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="goToCreatePost.do"> Create Post</a></li>
     </ul>
     <div class="row justify-content-center">
         <form:form action="createUser.do" method="POST"

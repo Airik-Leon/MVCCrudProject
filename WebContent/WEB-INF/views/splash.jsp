@@ -51,7 +51,7 @@
     <div class="row justify-content-center" id="splashDiv">
         <form action="admin.do" method="GET">
             <input class="btn btn-danger" id="admin" type="submit"
-                name="admin" value="Admin login" />
+                name="admin" value="${admin} : manage Account" />
         </form>
         <form action="browse.do" method="GET">
             <input class="btn btn-success" id="guest" type="submit"

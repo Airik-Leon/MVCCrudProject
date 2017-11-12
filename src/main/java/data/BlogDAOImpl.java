@@ -52,8 +52,9 @@ public class BlogDAOImpl implements PostDAO {
 				String lastName = tokens[2].trim();
 				String userName = tokens[3].trim();
 				String password = tokens[4].trim();
-				LocalDate accountOrigin = LocalDate.parse(tokens[5].trim(), formatter); 
+				LocalDate accountOrigin = LocalDate.parse(tokens[5].trim(), formatter);
 				User user = new User(id, firstName, lastName, userName, password, accountOrigin); 
+				if(tokens[6].trim().equals("admin"))user.setAdmin(true);
 				userCount++; 
 				userMap.put(user.getId(), user); 
 			}
