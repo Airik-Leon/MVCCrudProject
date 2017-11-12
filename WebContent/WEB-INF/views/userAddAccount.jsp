@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Airik's blog</title>
+<title>Admin: Create User</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -24,13 +24,11 @@
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse"
             id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active"><a class="nav-link"
-                    href="http://airikleon.io">home <span
-                        class="sr-only">(current)</span>
+                    href="http://airikleon.io">home <span class="sr-only">(current)</span>
                 </a></li>
                 <li class="nav-item"><a class="nav-link"
                     href="about.html">about</a></li>
@@ -44,24 +42,48 @@
             </ul>
         </div>
     </nav>
-    <ul class="nav nav-pills" style="margin-top:20px; margin-left:5px;">
-        <li class="nav-item"><a class="nav-link active" href="userLogIn.do">${userName}</a>
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link" href="splash.do">Home</a>
         </li>
-        <li class="nav-item"><a class="nav-link" href="goToUserAddAccount.do">Add account</a>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="#">ManageAccount</a>
-        </li>
+        <li class="nav-item"><a class="nav-link active"
+            href="WebContent/WEB-INF/views/userAddAccount.jsp">Create User</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="goToCreatePost.do"> Create Post</a></li>
     </ul>
-    <h1 class="row justify-content-center">Hello Internet</h1>
-    <div class="row justify-content-center" id="splashDiv">
-        <form action="admin.do" method="GET">
-            <input class="btn btn-danger" id="admin" type="submit"
-                name="admin" value="${admin}" />
-        </form>
-        <form action="browse.do" method="GET">
-            <input class="btn btn-success" id="guest" type="submit"
-                value="Browse posts" name="guest" />
-        </form>
+    <div class="row justify-content-center">
+        <form:form action="createUser.do" method="POST"
+            modelAttribute="user">
+            <div class="form-group">
+                <label>First Name </label>
+                <form:input type="text" class="form-control"
+                    name="firstName" path="firstName" id="firstName"
+                    placeholder="First Name" />
+                <form:errors path="firstName"></form:errors>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <form:input type="text" class="form-control"
+                    path="lastName" id="lastName" name="lastName"
+                    placeholder="Last Name" />
+                <form:errors path="lastName"></form:errors>
+            </div>
+            <div class="form-group">
+                <label for="userName">User Name</label>
+                <form:input type="text" class="form-control"
+                    path="userName" id="userName" name="userName"
+                    placeholder="User Name" />
+                <form:errors path="userName"></form:errors>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <form:input type="text" class="form-control"
+                    id="password" path="password" name="password"
+                    placeholder="Password" />
+                <form:errors path="password"></form:errors>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form:form>
+        <label>${error}</label>
     </div>
     <footer class="footer">
         <div class="container">
@@ -100,5 +122,3 @@
     integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
     crossorigin="anonymous"></script>
 </html>
-
-
