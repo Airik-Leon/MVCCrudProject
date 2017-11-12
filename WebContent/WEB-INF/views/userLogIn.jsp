@@ -43,6 +43,16 @@
             </ul>
         </div>
     </nav>
+
+    <ul class="nav nav-pills"
+        style="margin-top: 20px; margin-left: 5px;">
+        <li class="nav-item"><a class="nav-link active"
+            href="userLogIn.do">${userName}</a></li>
+        <li class="nav-item"><a class="nav-link"
+            href="goToUserAddAccount.do">Add account</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">ManageAccount</a>
+        </li>
+    </ul>
     <div class="row justify-content-center">
         <div>
             <h2>User log-in</h2>

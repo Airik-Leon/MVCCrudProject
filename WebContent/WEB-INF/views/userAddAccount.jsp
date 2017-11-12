@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Admin: Create User</title>
+<title>User: add Account</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -46,12 +46,12 @@
         <li class="nav-item"><a class="nav-link" href="splash.do">Home</a>
         </li>
         <li class="nav-item"><a class="nav-link active"
-            href="WebContent/WEB-INF/views/userAddAccount.jsp">Create User</a></li>
+            href="goToUserAddAccount.do">Create User</a></li>
         <li class="nav-item"><a class="nav-link"
-            href="goToCreatePost.do"> Create Post</a></li>
+            href="goToUserCreatePost.do"> Create Post</a></li>
     </ul>
     <div class="row justify-content-center">
-        <form:form action="createUser.do" method="POST"
+        <form:form action="addUserAccount.do" method="POST"
             modelAttribute="user">
             <div class="form-group">
                 <label>First Name </label>
