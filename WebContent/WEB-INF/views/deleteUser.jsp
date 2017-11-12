@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Admin: Update User</title>
+<title>Admin: Delete User</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -28,7 +28,7 @@
                 User</a></li>
     </ul>
     <div class="row justify-content-center" style="margin-top:50px;">
-        <form:form action="updateUser.do" method="POST" modelAttribute="toBeDeleted">
+        <form:form action="deleteUser.do" method="GET" modelAttribute="delete">
             <ul class="list-group">
                 <li class="list-group-item">User id:<form:input 
                     type="text" name="id" path="id" value="${user.id}" readonly="true"/>
@@ -53,9 +53,9 @@
                     type="text" name="accountOrigin" path="accountOrigin"
                     value="${user.accountOrigin}" readonly="true"/>
                 </li>
-                <li class="row justify-content-center"><input class="btn btn-danger" type="submit"
-                    value="Delete user" id="btnAdminUpdateUser" /></li>
             </ul>
+           <input class="btn btn-danger" type="submit"
+                    value="Delete user" id="btnAdminUpdateUser" />
         </form:form>
     </div>
 

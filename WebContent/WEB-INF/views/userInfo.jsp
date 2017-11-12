@@ -81,7 +81,7 @@
                                 type="submit" value="Update user"
                                 id="btnAdminUpdateUser" />
                         </form>
-                        <form action="goToDeleteUser.do" method="POST">
+                        <form action="deleteUser.do" method="GET">
                         <input type="hidden" name="id" value="${result.id}" />
                             <input class="btn btn-danger" type="submit"
                                 value="Delete user"

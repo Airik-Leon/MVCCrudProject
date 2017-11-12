@@ -143,12 +143,12 @@ public class BlogDAOImpl implements PostDAO {
 
 	@Override
 	public User editUser(User user) {
+		System.out.println(user);
 		return userMap.put(user.getId(), user); 
 	}
 
 	@Override
 	public User deleteUser(User user) {
-		System.out.println(user);
 		return userMap.remove(user.getId()); 
 	}
 	@Override

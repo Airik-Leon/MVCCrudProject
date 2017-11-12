@@ -1,9 +1,6 @@
 package controllers;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.time.LocalDate;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -11,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -132,28 +130,30 @@ public class AdminController {
 		model.addAttribute("user", user); 
 		return "updateUser"; 
 	}
-	@RequestMapping(path="updateUser.do",  method=RequestMethod.POST)
-	public ModelAndView updateUser(User result) {
-		ModelAndView mv = new ModelAndView("admin"); 
-		dao.editUser(result); 
+	
+	@RequestMapping("updateUser.do")
+	public ModelAndView updateUser(@RequestParam("id") int id
+			, @RequestParam("userName") String userName
+			, @RequestParam("firstName")String firstName
+			, @RequestParam("lastName")String lastName
+			, @RequestParam("password")String password
+			, @RequestParam("accountOrigin")LocalDate accountOrigin) {
+		ModelAndView mv = new ModelAndView("userInfo"); 
+		User user = new User(id, firstName, lastName, userName, password, accountOrigin);
+		dao.editUser(user); 
+		mv.addObject("user", user); 
 		return mv; 
 	}
-	@RequestMapping("goToDeleteUser.do")
-	public String goToDeleteUser(@RequestParam("id") int id, Model model) {
-		User user = dao.getUser(id); 
-		User toBeDeleted = new User(); 
-		model.addAttribute("user", user); 
-		model.addAttribute("toBeDeleted", toBeDeleted); 
-		return "deleteUser"; 
-	}
 	@RequestMapping("deleteUser.do")
-	public ModelAndView deleteUser(User user) {
-		ModelAndView mv = new ModelAndView("admin");
-		dao.deleteUser(user); 
+	public ModelAndView deleteUser(@RequestParam("id") int id) {
+		ModelAndView mv = new ModelAndView();
+		User user = dao.getUser(id); 
+		mv.addObject("logDelete", dao.deleteUser(user));
 		int postCount = dao.getPostTotal(); 
 		int userCount = dao.getUserTotal(); 
 		mv.addObject("postCount", postCount); 
 		mv.addObject("userCount", userCount); 
+		mv.setViewName("admin");
 		return mv; 
 	}
 }
