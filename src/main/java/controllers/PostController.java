@@ -46,12 +46,15 @@ public class PostController {
 			, @RequestParam("reply") String reply) {
 		ModelAndView mv = new ModelAndView();
 		User user = (User) session.getAttribute("user");
+		if(user == null) {
+			mv.setViewName("redirect: userLogIn.do");
+			return mv; 
+		}
 		User poster = dao.getUser(id); 
 		Post post = dao.getPost(poster, id); 
 		Post userReply = new Post(); 
 		
 		userReply.setCategory(post.getCategory());
-		mv.setViewName(post.getCategory());
 		userReply.setMessage(reply);
 		userReply.setPostID(dao.getPostTotal()+1);
 		userReply.setUserId(user.getId());
@@ -62,6 +65,7 @@ public class PostController {
 		post.getReplies().add(userReply);
 		user.getPosts().put(userReply.getPostID(), post); 
 		mv.addObject("posts", dao.getPostsByCategory(post.getCategory())); 
-		return new ModelAndView("redirect: " + "AfterThoughts"); 
+		mv.setViewName("redirect: goTo" + post.getCategory().toString() + ".do");
+		return mv; 
 	}
 }
