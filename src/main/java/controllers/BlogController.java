@@ -41,11 +41,14 @@ public class BlogController {
 		return "browse"; 
 	}
 	@RequestMapping(path="admin.do", method=RequestMethod.GET)
-	public String admin(HttpSession session) {
+	public ModelAndView admin(HttpSession session) {
+		ModelAndView mv = new ModelAndView("adminLogIn"); 
+		
 		User user =(User) session.getAttribute("user");
 		if(user != null && user.isAdmin()) {
-			return "admin";
+			mv.setViewName("redirect: goToAdmin.do");
+			return mv;
 		}
-		return "adminLogIn"; 
+		return mv ; 
 	}
 }

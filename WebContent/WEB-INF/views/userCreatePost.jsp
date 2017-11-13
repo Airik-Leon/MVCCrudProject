@@ -54,7 +54,7 @@
         <li class="nav-item"><a class="nav-link"
             href="userLogOut.do">Log out</a></li>
         <li class="nav-item"><a class="nav-link"
-            href="userCreatePost.do">Create Post</a></li>
+            href="goToUserCreatePost.do">Create Post</a></li>
     </ul>
     <h1 class="row justify-content-center">Create a post</h1>
     <div class="container justify-content-center"
@@ -64,12 +64,12 @@
             <div class="form-group">
                 <label for="title">Title </label>
                 <form:input type="text" class="form-control" id="title"
-                    name="title" path="title" placeholder="title" />
+                    name="title" path="title" placeholder="title" required="true"/>
             </div>
             <div class="form-group">
                 <label for="category">Category </label>
                 <form:select class="form-control" id="category"
-                    name="category" path="category">
+                    name="category" path="category" required="true">
                     <option>AfterThoughts</option>
                     <option>Articles</option>
                     <option>Photography</option>
@@ -79,7 +79,7 @@
             <div class="form-group">
                 <label for="message">Message </label>
                 <form:textarea class="form-control" path="message"
-                    id="message" name="message" rows="4"></form:textarea>
+                    id="message" name="message" rows="4" required="true"></form:textarea>
             </div>
             <input type="submit"
                 class="btn btn-success justify-content-center"

@@ -28,7 +28,12 @@ public class PostController {
 	}
 	@RequestMapping("createPost.do")
 	public ModelAndView createPost(Post post, HttpSession session) {
-		ModelAndView mv = new ModelAndView(post.getCategory().toString());
+		ModelAndView mv = new ModelAndView();
+		if(post == null) {
+			mv.setViewName("redirect: splash.do");
+			return mv; 
+		}
+		mv.setViewName(post.getCategory().toString());
 		post.setPostStamp(LocalDate.now());
 		User user = (User) session.getAttribute("user"); 
 		int postId = dao.getPostTotal()+1; 
@@ -37,6 +42,7 @@ public class PostController {
 		post.setUserId(user.getId());
 		System.out.println(post);
 		dao.createPost(post); 
+		dao.savePosts();
 		mv.addObject("posts", dao.getPostsByCategory(post.getCategory())); 
 		return mv; 
 	}

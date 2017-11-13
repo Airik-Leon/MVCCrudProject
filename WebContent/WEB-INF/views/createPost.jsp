@@ -54,7 +54,7 @@
         <li class="nav-item"><a class="nav-link"
             href="goToUserInfo.do">Get User</a></li>
         <li class="nav-item"><a class="nav-link active"
-            href="createPost.do"> Create Post</a></li>
+            href="goToCreatePost.do"> Create Post</a></li>
     </ul>
     <h1 class="row justify-content-center">Create a post</h1>
     <div class="container justify-content-center" style="margin-top:50px">

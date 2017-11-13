@@ -68,12 +68,13 @@ public class UserController {
 	public String goToUserAddAccount(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		if (user != null && !user.isAdmin()) {
-			return "splash";
+			return "redirect: splash.do";
 		}
 		user = new User();
 		model.addAttribute("user", user);
 		return "userAddAccount";
 	}
+
 	@RequestMapping("addUserAccount.do")
 	public ModelAndView addUserAccount(User user, HttpSession session) {
 		ModelAndView mv = new ModelAndView("userAddAccount");
@@ -90,6 +91,7 @@ public class UserController {
 		user.setAdmin(false);
 		user.setAccountOrigin(LocalDate.now());
 		dao.createUser(user);
+		dao.saveUsers();
 		session.setAttribute("user", user);
 		mv.setViewName("browse");
 		return mv;
@@ -108,7 +110,12 @@ public class UserController {
 
 	@RequestMapping("userCreatePost.do")
 	public ModelAndView userCreatePost(Post post, HttpSession session) {
-		ModelAndView mv = new ModelAndView(post.getCategory().toString());
+		ModelAndView mv = new ModelAndView();
+		if (post == null) {
+			mv.setViewName("redirect: splash.do");
+			return mv;
+		}
+		mv.setViewName(post.getCategory().toString());
 		post.setPostStamp(LocalDate.now());
 		User user = (User) session.getAttribute("user");
 		int postId = dao.getPostTotal() + 1;
@@ -123,7 +130,7 @@ public class UserController {
 
 	@RequestMapping("userLogOut")
 	public ModelAndView logOut(HttpSession session) {
-		ModelAndView mv = new ModelAndView("splash");
+		ModelAndView mv = new ModelAndView("redirect: splash.do");
 		session.setAttribute("user", null);
 		session.setAttribute("userName", "Log-in");
 		session.setAttribute("admin", "Admin log-in");

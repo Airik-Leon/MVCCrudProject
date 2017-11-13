@@ -1,8 +1,14 @@
 package data;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,7 +24,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 @Component
 public class BlogDAOImpl implements PostDAO {
-	
+	private final String USERS = "/WEB-INF/resources/users.txt"; 
+	private final String POSTS = "/WEB-INFresources/posts.txt"; 
 	private Map<Integer, User> userMap; 
 	private Map<Integer, Post>	postMap;
 	private static int userCount = 0; 
@@ -91,8 +98,73 @@ public class BlogDAOImpl implements PostDAO {
 			System.err.println(e);
 		}
 	}
-	private void loadState() {
-		
+	@Override
+	public void saveUsers() {
+		File users = new File(wac.getServletContext().getRealPath("/WEB-INF/resources/users.txt"));        
+        FileOutputStream fos; 
+        List<User> list = getUsers(); 
+        
+		StringBuilder sb = new StringBuilder(); 
+		String amp = " & "; 
+		try {
+			fos = new FileOutputStream(users);
+			for (User user : list) {
+				sb.append(user.getId()); 
+				sb.append(amp); 
+				sb.append(user.getFirstName());
+				sb.append(amp);
+				sb.append(user.getLastName());
+				sb.append(amp);
+				sb.append(user.getPassword());
+				sb.append(amp);
+				sb.append(user.getAccountOrigin());
+				sb.append(amp);
+				if(user.isAdmin()) {
+					sb.append("admin");
+				}
+				else {
+					sb.append("user"); 
+				}
+				fos.write(sb.toString().getBytes());
+			}
+			fos.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
+	public void savePosts() {
+		File users = new File(wac.getServletContext().getRealPath("/WEB-INF/resources/posts.txt"));        
+        FileOutputStream fos; 
+        List<Post> list = getPosts(); 
+        
+		StringBuilder sb = new StringBuilder(); 
+		String amp = " & "; 
+		try {
+			fos = new FileOutputStream(users);
+			for (Post post : list) {
+				sb.append(post.getPostID()); 
+				sb.append(amp); 
+				sb.append(post.getTitle());
+				sb.append(amp);
+				sb.append(post.getMessage());
+				sb.append(amp);
+				sb.append(post.getPostStamp());
+				sb.append(amp);
+				sb.append(post.getUserId());
+				sb.append(amp);
+				sb.append(post.getUserName());
+				sb.append(amp);
+				sb.append(post.getCategory());
+
+				fos.write(sb.toString().getBytes());
+			}
+			fos.close();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	@Override
 	public Post createPost(Post post) {
