@@ -19,14 +19,14 @@
                     class="sr-only">(current)</span>
             </a></li>
             <li class="nav-item"><a class="nav-link"
-                href="about.html">about</a></li>
+                href="http://airikleon.io/about.html">about</a></li>
             <li><a href=""></a></li>
             <li class="nav-item"><a class="nav-link"
-                href="portfolio.html">portfolio</a></li>
+                href="http://airikleon.io/portfolio.html">portfolio</a></li>
             <li class="nav-item"><a class="nav-link"
                 href="splash.do">blog</a></li>
             <li class="nav-item"><a class="nav-link"
-                href="contact.html"> contact</a></li>
+                href="http://airikleon.io/contact.html"> contact</a></li>
         </ul>
     </div>
 </nav>
