@@ -43,14 +43,15 @@ public class PostController {
 	@RequestMapping("goToReply.do")
 	public ModelAndView createPost(HttpSession session
 			, @RequestParam("postId") int id
-			, @RequestParam("reply") String reply) {
+			, @RequestParam("reply") String reply
+			, @RequestParam("postUserName") String userName) {
 		ModelAndView mv = new ModelAndView();
 		User user = (User) session.getAttribute("user");
 		if(user == null) {
 			mv.setViewName("redirect: userLogIn.do");
 			return mv; 
 		}
-		User poster = dao.getUser(id); 
+		User poster = dao.getUserByUserName(userName); 
 		Post post = dao.getPost(poster, id); 
 		Post userReply = new Post(); 
 		

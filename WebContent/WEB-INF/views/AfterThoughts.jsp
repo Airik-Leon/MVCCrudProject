@@ -70,22 +70,26 @@
         <ul>
             <c:forEach var="p" items="${posts}">
                 <form action="goToReply.do" method="Post">
-                <input type="hidden" name="postId" value="${p.postID}"/>
+                    <input type="hidden" name="postId"
+                        value="${p.postID}" /> <input type="hidden"
+                        name="postUserName" value="${p.userName}" />
                     <ul class="justify-container-center"
                         style="margin: 20px;">
                         <li class="list-group-item">${p.userName}
                             posted ${p.title } on ${p.postStamp }</li>
                         <li class="list-group-item"><textarea
                                 rows="4" cols="100"
-                                placeholder="${p.message}"
-                                 readonly></textarea></li>
+                                placeholder="${p.message}" readonly></textarea></li>
                         <li class="list-group-item">
                             <ul class="list-group">
                                 <c:forEach var="reply"
                                     items="${p.replies}">
                                     <li class="list-group-item">
-                                    <h4>${reply.title } on ${reply.postStamp }</h4>
-                                        <p>${reply.userName}: ${reply.message}<p> 
+                                        <h4>${reply.title }on
+                                            ${reply.postStamp }</h4>
+                                        <p>${reply.userName}:
+                                            ${reply.message}
+                                        <p>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -99,25 +103,25 @@
                                     aria-expanded="false">
                                     Reply</button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item">
-                                        <textarea rows="2" cols="40"
+                                    <a class="dropdown-item"> <textarea
+                                            rows="2" cols="40"
                                             name="reply"></textarea>
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                   <div class="dropdown-item">
-                                   <input type="submit"
+                                    <div class="dropdown-item">
+                                        <input type="submit"
                                             value="post message"
                                             class="btn btn-primary" />
-                                   </div> 
+                                    </div>
                                 </div>
                             </div>
                         </li>
 
-<!--                         <li class="list-group-item"><input
+                        <!--                         <li class="list-group-item"><input
                             type="submit" value="reply"
                             class="btn btn-primary" /></li> -->
 
-                        </ul>
+                    </ul>
                 </form>
 
             </c:forEach>

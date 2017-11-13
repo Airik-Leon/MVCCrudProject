@@ -178,8 +178,6 @@ public class BlogDAOImpl implements PostDAO {
 		List<Post> filtered = new ArrayList<>(); 
 		List<Post> list = getPosts(); 
 		for (Post post : list) {
-			System.out.println(post);
-			System.out.println(category);
 			if(matcher.test(post, category)) {
 				filtered.add(post); 
 			}
