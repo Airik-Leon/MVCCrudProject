@@ -7,6 +7,7 @@ import java.util.List;
 public class Post {
 	protected int postID; 
 	protected int userId;
+	protected String username; 
 	protected String title; 
 	protected String message; 
 	protected LocalDateTime postStamp; 
@@ -91,6 +92,19 @@ public class Post {
 		if (postID != other.postID)
 			return false;
 		return true;
+	}
+	public List<SubPost> getReplies() {
+		return replies;
+	}
+	public void setReplies(List<SubPost> replies) {
+		this.replies = replies;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	@Override
 	public String toString() {

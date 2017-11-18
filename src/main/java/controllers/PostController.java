@@ -35,12 +35,9 @@ public class PostController {
 			return mv; 
 		}
 		mv.setViewName(post.getCategory().toString());
-		post.setPostStamp(LocalDateTime.now());
 		User user = (User) session.getAttribute("user"); 
-		int postId = dao.getPostTotal()+1; 
-		post.setPostID(postId);
+		
 		post.setUserId(user.getId());
-		System.out.println(post);
 		dao.createPost(post); 
 		mv.addObject("posts", dao.getPostsByCategory(post.getCategory())); 
 		return mv; 
@@ -48,8 +45,7 @@ public class PostController {
 	@RequestMapping("goToReply.do")
 	public ModelAndView createPost(HttpSession session
 			, @RequestParam("postId") int id
-			, @RequestParam("reply") String reply
-			, @RequestParam("postUserName") String userName) {
+			, @RequestParam("reply") String reply ) {
 		ModelAndView mv = new ModelAndView();
 		
 		User user = (User) session.getAttribute("user");
@@ -59,9 +55,9 @@ public class PostController {
 			return mv; 
 		}
 		Post post = dao.getPost(id); 
-	
+		System.out.println();
 		SubPost userReply = new SubPost(); 
-		userReply.setParentId(id);
+		userReply.setParentId(post.getPostID());
 		userReply.setUserId(user.getId());
 		userReply.setTitle("reply to: "+ dao.getUserById(post.getUserId()).getUserName() + ": " + post.getTitle());
 		userReply.setMessage(reply);

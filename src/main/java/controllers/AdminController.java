@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import data.PostDAO;
+import data.BlogDAO;
 import data.User;
 @Controller
 public class AdminController {
 	private final static  String NOT_EXIST = "User does not exist try again"; 
 	@Autowired
-	private PostDAO dao; 
+	private BlogDAO dao; 
 	private List<String> activityLog = new ArrayList<>(); 
 	//Page routing 
 	@RequestMapping("log-in.do")
@@ -112,15 +112,12 @@ public class AdminController {
 		return mv; 
 	}
 	@RequestMapping("searchById.do")
-	public ModelAndView adminsearchById(@RequestParam("id")int id, HttpSession session) {
+	public ModelAndView adminsearchById(@RequestParam("id")int id) {
 		ModelAndView mv = new ModelAndView("userInfo");
-		User user = dao.getUser(id); 
+		User user = dao.getUserById(id); 
 		if(user == null) {
-			String result = null; 
-			mv.addObject("result", result);
 			return mv; 
-		}
-		session.setAttribute("result", user);
+		}	
 		mv.addObject("result", user ); 
 		return mv; 
 	}
@@ -138,36 +135,44 @@ public class AdminController {
 		return mv; 
 	}
 	@RequestMapping("goToUpdateUser.do")
-	public String goToUpdateUser(Model model) {
-		User user = new User(); 
+	public ModelAndView goToUpdateUser(Model model, @RequestParam("id") int id) {
+		ModelAndView mv = new ModelAndView("updateUser");
+		User userToEdit = dao.getUserById(id); 
+		User user = new User();
+		
+		mv.addObject("result", userToEdit); 
 		model.addAttribute("user", user); 
-		return "updateUser"; 
+		return mv; 
 	}
 	
 	@RequestMapping("updateUser.do")
 	public ModelAndView updateUser(User user) {
 		StringBuilder sb = new StringBuilder(); 
 		ModelAndView mv = new ModelAndView("admin"); 
-		dao.editUser(user); 
+		User editedUser = dao.editUser(user); 
+		
 		int userCount = dao.getUserTotal(); 
 		int postCount = dao.getPostTotal(); 
 		
 		sb.append("Date: "); 
 		sb.append(LocalDate.now()); 
-		sb.append(user.toString()); 
+		sb.append(editedUser.toString()); 
 		sb.append(" updated"); 
+		
 		activityLog.add(sb.toString()); 
+		
 		mv.addObject("activityLog", activityLog); 
 		mv.addObject("userCount", userCount); 
 		mv.addObject("postCount", postCount); 
-		mv.addObject("user", user); 
+		mv.addObject("user", editedUser); 
 		return mv; 
 	}
 	@RequestMapping("deleteUser.do")
 	public ModelAndView deleteUser(@RequestParam("id") int id) {
 		StringBuilder sb = new StringBuilder(); 
 		ModelAndView mv = new ModelAndView();
-		User user = dao.getUser(id); 
+		User user = dao.getUserById(id); 
+		
 		mv.addObject("logDelete", dao.deleteUser(user));
 		int postCount = dao.getPostTotal(); 
 		int userCount = dao.getUserTotal(); 

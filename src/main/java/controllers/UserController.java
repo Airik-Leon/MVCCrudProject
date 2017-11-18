@@ -1,6 +1,5 @@
 package controllers;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpSession;
@@ -12,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import data.BlogDAO;
 import data.Post;
-import data.PostDAO;
 import data.User;
 
 @Controller
 public class UserController {
 	private final static String NOT_EXIST = "User does not exist try again";
 	@Autowired
-	PostDAO dao;
+	BlogDAO dao;
 
 	@RequestMapping("userLogIn.do")
 	public ModelAndView userLogIn(HttpSession session) {
@@ -46,6 +45,7 @@ public class UserController {
 			return mv;
 		} else {
 			user = dao.getUserByUserName(userName);
+			System.out.println(user);
 		}
 		// User does not exist
 		if (user == null) {
@@ -53,6 +53,7 @@ public class UserController {
 			return mv;
 		} // User exist check password
 		else if (user.getPassword().equals(pw) && !user.isAdmin()) {
+			
 			session.setAttribute("user", user);
 			session.setAttribute("userName", user.getUserName());
 			session.setAttribute("admin", "Admin log-in");
@@ -68,7 +69,7 @@ public class UserController {
 	@RequestMapping("goToUserAddAccount.do")
 	public String goToUserAddAccount(Model model, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		if (user != null && !user.isAdmin()) {
+		if (user != null && ! user.isAdmin()) {
 			return "redirect: splash.do";
 		}
 		user = new User();

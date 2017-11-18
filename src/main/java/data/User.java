@@ -13,11 +13,11 @@ public class User {
 	@Size(min=8, max=20, message="password must be at least 8 characters")
 	private String password; 
 	private LocalDateTime accountOrigin;
-	String role; 
+	int role; 
 	
 	public User() {
 	}
-	public User(int id, String firstName, String lastName,  String userName, String password, LocalDateTime accountOrigin, String role) {
+	public User(int id, String firstName, String lastName,  String userName, String password, LocalDateTime accountOrigin, int role) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -64,15 +64,17 @@ public class User {
 		this.lastName = lastName;
 	}
 	public boolean isAdmin() {
-		if(role.contains("Admin")) {
+		if(role == 1) {
 			return true;
 		}
-		return false;
+		else {
+			return false;		
+		}
 	}
-	public String getRole() {
+	public int getRole() {
 		return this.role;
 	}
-	public void setRole(String role) {
+	public void setRole(int role) {
 		this.role = role;
 	}
 	@Override

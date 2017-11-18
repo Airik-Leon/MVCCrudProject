@@ -32,10 +32,9 @@ public class BlogDAOImpl implements BlogDAO {
 		StringBuilder sql = new StringBuilder();
 		int rowsAffected; 
 		int returnedId; 
-		LocalDateTime returnedTimeStamp; 
 		
-		sql.append("INSERT INTO post (user_id, title, message, category_id, post_stamp ");
-		sql.append("VALUES(?, ?, ? , ?, (SELECT id FROM category WHERE name = ?) "); 
+		sql.append("INSERT INTO post (user_id, title, message, post_stamp, category_id) ");
+		sql.append(" VALUES(?, ?, ? , ?, (SELECT id FROM category WHERE name = ?) )"); 
 
 		Connection conn = null; 
 		try {
@@ -45,11 +44,11 @@ public class BlogDAOImpl implements BlogDAO {
 			statement.setInt(1, post.getUserId());
 			statement.setString(2, post.getTitle());
 			statement.setString(3,  post.getMessage());
-			statement.setString(4, "\'" + post.getCategory() + "\'");
-			
 			//Convert localdate to SQL timestamp
 			Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-			statement.setTimestamp(5, timestamp);
+			statement.setTimestamp(4, timestamp);
+			post.setPostStamp(timestamp.toLocalDateTime());
+			statement.setString(5, post.getCategory());
 			
 			rowsAffected = statement.executeUpdate();
 			System.out.println(rowsAffected);
@@ -58,8 +57,6 @@ public class BlogDAOImpl implements BlogDAO {
 			while(key.next()) {
 				returnedId = key.getInt(1); 
 				post.setPostID(returnedId);
-				returnedTimeStamp =   key.getTimestamp(5).toLocalDateTime(); 
-				post.setPostStamp(returnedTimeStamp);
 			}			
 			conn.commit();
 		}
@@ -87,13 +84,15 @@ public class BlogDAOImpl implements BlogDAO {
 			statement.setInt(1, id);
 			//Get values 
 			ResultSet rs = statement.executeQuery();
-			int postId = rs.getInt(1);
-			int userId = rs.getInt(2); 
-			String title = rs.getString(3); 
-			String message = rs.getString(4); 
-			LocalDateTime postOrigin = rs.getTimestamp(5).toLocalDateTime();
-			String category = rs.getString(6); 
-			post = new Post(postId, userId, title, message, postOrigin, category); 
+			if(rs.next()) {
+				int postId = rs.getInt(1);
+				int userId = rs.getInt(2); 
+				String title = rs.getString(3); 
+				String message = rs.getString(4); 
+				LocalDateTime postOrigin = rs.getTimestamp(5).toLocalDateTime();
+				String category = rs.getString(6); 
+				post = new Post(postId, userId, title, message, postOrigin, category); 			
+			}
 			conn.commit();
 		}
 		catch(SQLException e) {
@@ -110,7 +109,7 @@ public class BlogDAOImpl implements BlogDAO {
 		try {
 			Connection conn = DriverManager.getConnection(url, user, pass);
 			sql.append("SELECT p.id, p.user_id, p.title, p.message, p.post_stamp, c.name"); 
-			sql.append(" FROM post p JOIN category c  ON p.category_id = c.id ORDER p.post_stamp");
+			sql.append(" FROM post p JOIN category c  ON p.category_id = c.id ORDER BY p.post_stamp");
 			PreparedStatement stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery();
 			
@@ -208,11 +207,13 @@ public class BlogDAOImpl implements BlogDAO {
 	@Override
 	public User createUser(User newUser) {
 		StringBuilder sql = new StringBuilder();
-		int returnedId; 
-		LocalDateTime returnedTimeStamp; 
-		
-		sql.append("INSERT INTO user (first_name, last_name, username, password, account_origin, role id ");
-		sql.append("VALUES(?, ? , ?, ?, ?, (SELECT id FROM role WHERE name = ?) "); 
+		int returnedId; 		
+		sql.append(
+				"INSERT INTO user (first_name, last_name, username, password, account_origin)"
+				);
+		sql.append(
+				" VALUES(?, ? , ?, ?, ?)"
+				); 
 
 		Connection conn = null; 
 		try {
@@ -223,19 +224,18 @@ public class BlogDAOImpl implements BlogDAO {
 			statement.setString(2, newUser.getLastName());
 			statement.setString(3, newUser.getUserName());
 			statement.setString(4, newUser.getPassword());
-			statement.setString(5, "\'" + newUser.getRole() + "\'");
-			
 			//Convert localdate to SQL timestamp
 			Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+			newUser.setAccountOrigin(timestamp.toLocalDateTime());
 			statement.setTimestamp(5, timestamp);
 			
+			int uc = statement.executeUpdate();
+			System.out.println(uc + " user created");
 			ResultSet key = statement.getGeneratedKeys();
 			
 			while(key.next()) {
 				returnedId = key.getInt(1); 
 				newUser.setId(returnedId);
-				returnedTimeStamp =   key.getTimestamp(5).toLocalDateTime(); 
-				newUser.setAccountOrigin(returnedTimeStamp);
 			}			
 			conn.commit();
 		}
@@ -247,32 +247,31 @@ public class BlogDAOImpl implements BlogDAO {
 	}
 
 	@Override
-	public User getUserById(int id) {
-		StringBuilder sql = new StringBuilder();	
-		User foundUser = null; 
-		
-		sql.append("SELECT u.id, u.first_name, u.last_name, u.username, u.password, u.account_origin, r.name"); 
-		sql.append(" FROM user u JOIN role r  ON u.role_id = r.id WHERE u.id = ?");
-		
-		
+	public User getUserById(int userId) {
+		User foundUser = null;
 		Connection conn = null; 
+		
 		try {
 			conn = DriverManager.getConnection(url, user, pass); 
 			conn.setAutoCommit(false);
-			PreparedStatement statement = conn.prepareStatement(sql.toString()); 
-			//Send in ID
-			statement.setInt(1, id);
-			//Get values 
-			ResultSet rs = statement.executeQuery();
-			int userId = rs.getInt(1);
-			String firstName = rs.getString(2); 
-			String lastName = rs.getString(3); 
-			String username = rs.getString(4); 
-			String password = rs.getString(4); 
-			LocalDateTime accountOrigin = rs.getTimestamp(5).toLocalDateTime();
-			String role = rs.getString(6); 
-			foundUser = new User(userId, firstName, lastName, username, password,
-					accountOrigin, role); 
+			
+			String sql = " SELECT id, first_name, last_name, username, password, account_origin, role_id FROM user WHERE id = ? " ; 
+			PreparedStatement statement = conn.prepareStatement(sql); 
+			statement.setInt(1, userId);
+			
+			ResultSet rs = statement.executeQuery(); 
+			
+			if(rs.next()) {
+				int id = rs.getInt(1);
+				String firstName = rs.getString(2); 
+				String lastName = rs.getString(3); 
+				String username = rs.getString(4); 
+				String password = rs.getString(5); 
+				LocalDateTime accountOrigin = rs.getTimestamp(6).toLocalDateTime();
+				int role = rs.getInt(7); 			
+				foundUser = new User(id, firstName, lastName, username, password,
+						accountOrigin, role); 
+			}
 			conn.commit();
 		}
 		catch(SQLException e) {
@@ -288,7 +287,7 @@ public class BlogDAOImpl implements BlogDAO {
 			Connection conn = DriverManager.getConnection(url, user, pass);
 			String sql = "SELECT * FROM user WHERE username = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, "\'"+ userName + "\'");
+			stmt.setString(1, userName);
 			
 			ResultSet rs = stmt.executeQuery();
 			
@@ -299,7 +298,7 @@ public class BlogDAOImpl implements BlogDAO {
 				String username = rs.getString(4);
 				String password = rs.getString(5);
 				LocalDateTime accountOrigin = rs.getTimestamp(6).toLocalDateTime();
-				String role = rs.getString(7);
+				int role = rs.getInt(7);
 
 				foundUser = new User(id, firstName, lastName, username, password
 						, accountOrigin, role);
@@ -317,38 +316,19 @@ public class BlogDAOImpl implements BlogDAO {
 	@Override
 	public User editUser(User editUser) {
 		StringBuilder sql = new StringBuilder(); 
-		
-		sql.append("UPDATE user SET"); 
-		sql.append("first_name = ?"); 
-		sql.append("last_name = ?"); 
-		sql.append("username = ? "); 
-		sql.append("password = ? "); 
-		sql.append("WHERE id = ? "); 
-		
+		sql.append("Update user SET \n first_name = ?, \n last_name = ? , username = ?,  password = ?\n WHERE id = ? "); 
 		Connection conn = null; 
 		try {
 			conn = DriverManager.getConnection(url, user, pass); 
 			conn.setAutoCommit(false);
 			PreparedStatement statement = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS); 			
+			
 			statement.setString(1, editUser.getFirstName());
 			statement.setString(2, editUser.getLastName());
 			statement.setString(3, editUser.getUserName());
-			statement.setString(4, editUser.getPassword());			
+			statement.setString(4, editUser.getPassword());					
 			statement.setInt(5, editUser.getId());
-			
-			ResultSet key = statement.getGeneratedKeys();
-			
-			if(key.next()) {
-				String returnedFirstName = key.getString(1); 
-				String returnedLastName = key.getString(2);
-				String returnedUserName = key.getString(3);
-				String returnedPassword = key.getString(4);
-								
-				editUser.setFirstName(returnedFirstName); 
-				editUser.setLastName(returnedLastName); 
-				editUser.setUserName(returnedUserName); 
-				editUser.setPassword(returnedPassword); 
-			}			
+			int uc = statement.executeUpdate(); 
 			conn.commit();
 		}
 		catch(SQLException e) {
@@ -368,6 +348,8 @@ public class BlogDAOImpl implements BlogDAO {
 			
 			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); 
 			st.setInt(1, deletedUser.getId());
+			
+			int uc = st.executeUpdate();  
 			conn.commit();
 			st.close();
 			conn.close();
@@ -385,8 +367,8 @@ public class BlogDAOImpl implements BlogDAO {
 
 		try {
 			Connection conn = DriverManager.getConnection(url, user, pass);
-			sql.append("SELECT u.id, u.first_name, u.last_name, u.user_name, u.password, u.account_origin, r.name"); 
-			sql.append(" FROM user u JOIN role r ON u.role_id = r.id ORDER BY u.account_origin");
+			sql.append("SELECT u.id, u.first_name, u.last_name, u.user_name, u.password, u.account_origin, u.id"); 
+			sql.append(" FROM user u ORDER BY u.account_origin");
 			PreparedStatement stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery();
 			
@@ -397,7 +379,7 @@ public class BlogDAOImpl implements BlogDAO {
 				String userName = rs.getString(4); 
 				String password = rs.getString(5); 
 				LocalDateTime accountOrigin = rs.getTimestamp(5).toLocalDateTime(); 
-				String role = rs.getString(6); 
+				int role = rs.getInt(6); 
 				
 				User user = new User(id, firstName, lastName, userName, password, accountOrigin,
 						role); 
@@ -423,7 +405,9 @@ public class BlogDAOImpl implements BlogDAO {
 			conn.setAutoCommit(false);
 			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); 
 			ResultSet result = st.executeQuery();
-			totalUsers = result.getInt(1);
+			if(result.next()) {
+				totalUsers = result.getInt(1); 
+			}
 			conn.commit();
 			st.close();
 			conn.close();
@@ -443,7 +427,9 @@ public class BlogDAOImpl implements BlogDAO {
 			conn.setAutoCommit(false);
 			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); 
 			ResultSet result = st.executeQuery();
-			totalPosts = result.getInt(1);
+			if(result.next()) {
+				totalPosts = result.getInt(1); 
+			}
 			conn.commit();
 			st.close();
 			conn.close();
@@ -492,29 +478,29 @@ public class BlogDAOImpl implements BlogDAO {
 		return list;
 	}
 	@Override
-	public Post createReply(SubPost post) {	
+	public SubPost createReply(SubPost post) {	
 		StringBuilder sql = new StringBuilder();
 		int rowsAffected; 
 		int returnedId; 
-		LocalDateTime returnedTimeStamp; 
 		
-		sql.append("INSERT INTO post_reply (parent_id, user_id, title, message, category_id, post_stamp ");
-		sql.append("VALUES(?, ?, ? , ?, (SELECT id FROM category WHERE name = ?) "); 
+		sql.append("INSERT INTO post_reply (parent_post, user_id, title, message, post_stamp, category_id) ");
+		sql.append(" VALUES(?, ?, ? , ?, ?, (SELECT id FROM category WHERE name = ?)) "); 
 
 		Connection conn = null; 
 		try {
 			conn = DriverManager.getConnection(url, user, pass); 
 			conn.setAutoCommit(false);
-			PreparedStatement statement = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS); 			
+			PreparedStatement statement = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS); 	
+			
 			statement.setInt(1, post.getParentId());
 			statement.setInt(2, post.getUserId());
 			statement.setString(3, post.getTitle());
 			statement.setString(4,  post.getMessage());
-			statement.setString(5, "\'" + post.getCategory() + "\'");
-			
 			//Convert localdate to SQL timestamp
 			Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
 			statement.setTimestamp(5, timestamp);
+			statement.setString(6, post.getCategory() );
+			
 			
 			rowsAffected = statement.executeUpdate();
 			System.out.println(rowsAffected);
@@ -523,8 +509,6 @@ public class BlogDAOImpl implements BlogDAO {
 			while(key.next()) {
 				returnedId = key.getInt(1); 
 				post.setPostID(returnedId);
-				returnedTimeStamp =   key.getTimestamp(5).toLocalDateTime(); 
-				post.setPostStamp(returnedTimeStamp);
 			}			
 			conn.commit();
 		}
@@ -569,29 +553,34 @@ public class BlogDAOImpl implements BlogDAO {
 		return post;
 	}
 	@Override
-	public List<Post> getPostReplies(Post post) {
-		List<Post> replyPosts = new ArrayList<>(); 
+	public List<SubPost> getPostReplies(Post post) {
+		List<SubPost> replyPosts = new ArrayList<>(); 
 		StringBuilder sql = new StringBuilder(); 
 
 		try {
 			Connection conn = DriverManager.getConnection(url, user, pass);
-			sql.append("SELECT p.id, p.user_id, p.title, p.message, p.post_stamp, c.name"); 
-			sql.append("FROM post p JOIN category c  ON p.category_id = c.id ");
-			sql.append("JOIN post_reply r ON p.id = r.parent_post");
-			sql.append("ORDER BY p.post_stamp");
+			sql.append("SELECT Distinct pr.id, pr.parent_post, u.username, pr.title, pr.message, pr.post_stamp, c.name "); 
+			sql.append(" FROM post_reply pr JOIN category c  ON pr.category_id = c.id  ");
+			sql.append(" JOIN user u ON pr.user_id = u.id "); 
+			sql.append(" JOIN post p ON p.id = pr.parent_post WHERE pr.parent_post = ?");
+			sql.append(" ORDER BY p.post_stamp ");
+			
 			PreparedStatement stmt = conn.prepareStatement(sql.toString());
+			stmt.setInt(1, post.getPostID());
+//			stmt.setInt(2,  post.getPostID());
 			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()) {
 				int id = rs.getInt(1); 
 				int parentId = rs.getInt(2); 
-				int userId = rs.getInt(3); 
+				String username = rs.getString(3); 
 				String title = rs.getString(4); 
 				String message = rs.getString(5); 
 				LocalDateTime postStamp = rs.getTimestamp(6).toLocalDateTime(); 
 				String category = rs.getString(7); 
 				
-				Post subPost = new SubPost(id, parentId,  userId, title, message, postStamp, category); 
+				SubPost subPost = new SubPost(id, parentId,  getUserByUserName(username).getId(), title, message, postStamp, category);
+				subPost.setUsername(username);
 				replyPosts.add(subPost); 
 			}
 			rs.close();

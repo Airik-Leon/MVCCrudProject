@@ -32,10 +32,10 @@
                 <form action="goToReply.do" method="Post">
                     <input type="hidden" name="postId"
                         value="${p.postID}" /> <input type="hidden"
-                        name="postUserName" value="${p.userName}" />
+                        name="postUserName" value="${p.userId}" />
                     <ul class="justify-container-center"
                         style="margin: 20px;">
-                        <li class="list-group-item">${p.userName}
+                        <li class="list-group-item">
                             posted ${p.title } on ${p.postStamp }</li>
                         <li class="list-group-item"><textarea
                                 rows="4" cols="100"
@@ -46,7 +46,7 @@
                                     items="${p.replies}">
                                     <li class="list-group-item">
                                         <em style="font-size:8px;">${reply.title } on ${reply.postStamp }</em>
-                                        <p>${reply.userName}:
+                                        <p>${reply.username}:
                                             ${reply.message}
                                     </li>
                                 </c:forEach>
