@@ -1,14 +1,17 @@
 package data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Post {
-	private int postID; 
-	private int userId;
-	private String title; 
-	private String message; 
-	private LocalDateTime postStamp; 
-	private String category; 
+	protected int postID; 
+	protected int userId;
+	protected String title; 
+	protected String message; 
+	protected LocalDateTime postStamp; 
+	protected String category;
+	protected List<SubPost> replies; 
 	
 	public Post(int postID, int userId, String title, String message, LocalDateTime postOrigin, String category) {
 		super();

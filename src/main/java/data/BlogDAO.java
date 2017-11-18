@@ -19,5 +19,10 @@ public interface BlogDAO {
 	List<Post> getPosts();
 	List<Post> getPostsByCategory(String category);
 	User getUserById(int id);
+	List<Post> getPostReplies(Post post);
+	Post getReply(int id);
+	Post createReply(SubPost post);
+	Post editReply(Post post);
+	Post deleteReply(Post post);
 
 }

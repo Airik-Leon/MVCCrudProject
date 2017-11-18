@@ -12,19 +12,5 @@ import data.PostDAO;
 import data.User;
 
 public class BlogDAOTests {
-	
-	PostDAO dao; 
-	@Before
-	public void setUp() {
-		dao = new BlogDAOImpl(); 
-	}
-	@After 
-	public void tearDown() {
-		dao = null; 
-	}
-	@Test
-	public void test_Load_OF_USERS() {
-		System.out.println(dao.getUsers().size());
-	}
 
 }
