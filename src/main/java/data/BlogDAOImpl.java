@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,7 +77,7 @@ public class BlogDAOImpl implements PostDAO {
 		try{ 
 			InputStream is = wac.getServletContext().getResourceAsStream("/WEB-INF/resources/posts.txt");
 			BufferedReader buf = new BufferedReader(new InputStreamReader(is));
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM"); 
+			DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; 
 
 			String line; 
 			while ((line = buf.readLine()) != null) {
@@ -84,7 +85,7 @@ public class BlogDAOImpl implements PostDAO {
 				int postId = Integer.parseInt(tokens[0].trim()); 
 				String title = tokens[1].trim();
 				String message = tokens[2].trim();
-				LocalDate accountOrigin = LocalDate.parse(tokens[3].trim(), formatter); 
+				LocalDateTime accountOrigin = LocalDateTime.parse(tokens[3].trim(), formatter); 
 				int userId  = Integer.parseInt(tokens[4].trim());
 				String category = tokens[5].trim(); 
 				Post post = new Post(postId, title, message, accountOrigin, userId); 

@@ -1,6 +1,7 @@
 package controllers;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,7 +35,7 @@ public class PostController {
 			return mv; 
 		}
 		mv.setViewName(post.getCategory().toString());
-		post.setPostStamp(LocalDate.now());
+		post.setPostStamp(LocalDateTime.now());
 		User user = (User) session.getAttribute("user"); 
 		int postId = dao.getPostTotal()+1; 
 		post.setPostID(postId);
@@ -67,7 +68,7 @@ public class PostController {
 		userReply.setUserId(user.getId());
 		userReply.setUserName(user.getUserName());
 		userReply.setTitle("reply to: "+post.getUserName() + ": " + post.getTitle());
-		userReply.setPostStamp(LocalDate.now());
+		userReply.setPostStamp(LocalDateTime.now());
 		
 		post.getReplies().add(userReply);
 		user.getPosts().put(userReply.getPostID(), post); 

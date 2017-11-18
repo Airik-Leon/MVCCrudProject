@@ -1,6 +1,7 @@
 package data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class Post {
 	private int postID; 
 	private String title; 
 	private String message; 
-	private LocalDate postStamp; 
+	private LocalDateTime postStamp; 
 	private int userId;
 	private String userName; 
 	private String category; 
@@ -17,7 +18,7 @@ public class Post {
 	public Post() {
 		replies = new ArrayList<>(); 
 	}
-	public Post(int postID, String title, String message, LocalDate postStamp, int userId) {
+	public Post(int postID, String title, String message, LocalDateTime postStamp, int userId) {
 		super();
 		this.postID = postID;
 		this.title = title;
@@ -51,11 +52,11 @@ public class Post {
 		this.message = message;
 	}
 
-	public LocalDate getPostStamp() {
+	public LocalDateTime getPostStamp() {
 		return postStamp;
 	}
 
-	public void setPostStamp(LocalDate postStamp) {
+	public void setPostStamp(LocalDateTime postStamp) {
 		this.postStamp = postStamp;
 	}
 	

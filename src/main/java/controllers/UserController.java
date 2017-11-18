@@ -1,6 +1,7 @@
 package controllers;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpSession;
 
@@ -116,7 +117,7 @@ public class UserController {
 			return mv;
 		}
 		mv.setViewName(post.getCategory().toString());
-		post.setPostStamp(LocalDate.now());
+		post.setPostStamp(LocalDateTime.now().plusMinutes(0));
 		User user = (User) session.getAttribute("user");
 		int postId = dao.getPostTotal() + 1;
 		post.setPostID(postId);
