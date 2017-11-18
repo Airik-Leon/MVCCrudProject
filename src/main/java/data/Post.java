@@ -1,32 +1,25 @@
 package data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Post {
 	private int postID; 
+	private int userId;
 	private String title; 
 	private String message; 
 	private LocalDateTime postStamp; 
-	private int userId;
-	private String userName; 
 	private String category; 
-	private List<Post> replies; 
 	
-	public Post() {
-		replies = new ArrayList<>(); 
-	}
-	public Post(int postID, String title, String message, LocalDateTime postStamp, int userId) {
+	public Post(int postID, int userId, String title, String message, LocalDateTime postOrigin, String category) {
 		super();
 		this.postID = postID;
+		this.userId = userId; 
 		this.title = title;
 		this.message = message;
-		this.postStamp = postStamp;
-		this.userId = userId; 
-		replies = new ArrayList<>(); 
-
+		this.postStamp = postOrigin;
+		this.category = category; 
+	}
+	public Post() {
 	}
 	public int getPostID() {
 		return postID;
@@ -68,27 +61,12 @@ public class Post {
 		this.userId = userId;
 	}
 
-	public List<Post> getReplies() {
-		return replies;
-	}
-
-	public void setReplies(List<Post> replies) {
-		this.replies = replies;
-	}
-
 	public String getCategory() {
 		return category;
 	}
 
 	public void setCategory(String category) {
 		this.category = category;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 	@Override
 	public int hashCode() {
@@ -113,7 +91,7 @@ public class Post {
 	}
 	@Override
 	public String toString() {
-		return "Post [postID=" + postID + ", title=" + title + ", message=" + message + ", postStamp=" + postStamp
-				+ "]";
+		return "Post [postID=" + postID + ", userId=" + userId + ", title=" + title + ", message=" + message
+				+ ", postStamp=" + postStamp + ", category=" + category + "]";
 	}
 }

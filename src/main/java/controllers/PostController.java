@@ -39,7 +39,6 @@ public class PostController {
 		User user = (User) session.getAttribute("user"); 
 		int postId = dao.getPostTotal()+1; 
 		post.setPostID(postId);
-		post.setUserName(user.getUserName());
 		post.setUserId(user.getId());
 		System.out.println(post);
 		dao.createPost(post); 
@@ -66,8 +65,7 @@ public class PostController {
 		userReply.setMessage(reply);
 		userReply.setPostID(dao.getPostTotal()+1);
 		userReply.setUserId(user.getId());
-		userReply.setUserName(user.getUserName());
-		userReply.setTitle("reply to: "+post.getUserName() + ": " + post.getTitle());
+		userReply.setTitle("reply to: " /*put the users name via */+ ": " + post.getTitle());
 		userReply.setPostStamp(LocalDateTime.now());
 		
 		post.getReplies().add(userReply);

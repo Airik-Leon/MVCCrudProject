@@ -1,10 +1,5 @@
 package data;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.time.LocalDateTime;
 import javax.validation.constraints.Size;
 
 public class User {
@@ -17,43 +12,12 @@ public class User {
 	private String userName; 
 	@Size(min=8, max=20, message="password must be at least 8 characters")
 	private String password; 
-	private LocalDate accountOrigin;
-	private Map<Integer, Post> posts; 
-	private boolean isAdmin= false; 
-	public User() {
-		posts = new HashMap<>(); 
-	}
-	public User(int id, String firstName, String lastName,  String userName, String password, LocalDate accountOrigin) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName; 
-		this.userName = userName;
-		this.password = password;
-		this.accountOrigin = accountOrigin;
-		posts = new HashMap<>(); 
-
-	}
-	public User(String firstName, String lastName,  String userName, String password, LocalDate accountOrigin) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName; 
-		this.userName = userName;
-		this.password = password;
-		this.accountOrigin = accountOrigin;
-		posts = new HashMap<>(); 
-	}
-	public User(String firstName, String lastName,  String userName, String password) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName; 
-		this.userName = userName;
-		this.password = password;
-		posts = new HashMap<>(); 
-
-	}
+	private LocalDateTime accountOrigin;
+	String role; 
 	
-	public User(int id, String firstName, String lastName, String userName, String password, LocalDate accountOrigin, Map<Integer,Post> posts) {
+	public User() {
+	}
+	public User(int id, String firstName, String lastName,  String userName, String password, LocalDateTime accountOrigin, String role) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -61,7 +25,7 @@ public class User {
 		this.userName = userName;
 		this.password = password;
 		this.accountOrigin = accountOrigin;
-		this.posts = posts;
+		this.role = role;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -81,10 +45,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public LocalDate getAccountOrigin() {
+	public LocalDateTime getAccountOrigin() {
 		return accountOrigin;
 	}
-	public void setAccountOrigin(LocalDate accountOrigin) {
+	public void setAccountOrigin(LocalDateTime accountOrigin) {
 		this.accountOrigin = accountOrigin;
 	}
 	public int getId() {
@@ -93,28 +57,23 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public List<Post>getPostsAsList() {
-		return new ArrayList<Post>(posts.values());
-	}
-	public Map<Integer, Post> getPosts(){
-		return this.posts; 
-	}
-	public void setPosts(Map<Integer, Post> posts) {
-		this.posts = posts;
-	}
-	
 	public String getLastName() {
 		return lastName;
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
 	public boolean isAdmin() {
-		return isAdmin;
+		if(role.contains("Admin")) {
+			return true;
+		}
+		return false;
 	}
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
+	public String getRole() {
+		return this.role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	@Override
 	public int hashCode() {
@@ -139,7 +98,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
-				+ ", password=" + password + ", accountOrigin=" + accountOrigin + ", posts=" + posts + "]";
+				+ ", password=" + password + ", accountOrigin=" + accountOrigin + ", role=" + role + "]";
 	}
-
+	
 }

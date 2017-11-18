@@ -97,7 +97,6 @@ public class AdminController {
 			mv.addObject("error", "User name is taken choose a different one");
 			return mv; 
 		}
-		user.setAccountOrigin(LocalDate.now());
 		dao.createUser(user);
 		sb.append("Date: "); 
 		sb.append(LocalDate.now()); 

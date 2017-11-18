@@ -1,231 +1,371 @@
 package data;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiPredicate;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.WebApplicationContext;
+
 @Component
-public class BlogDAOImpl implements PostDAO {
-	private final String USERS = "/WEB-INF/resources/users.txt"; 
-	private final String POSTS = "/WEB-INFresources/posts.txt"; 
-	private Map<Integer, User> userMap; 
-	private Map<Integer, Post>	postMap;
-	private static int userCount = 0; 
-	private static int postCount = 0; 
-	private int id = 0; 
-	
-	@Autowired
-	private WebApplicationContext wac;
+public class BlogDAOImpl implements BlogDAO {
+	private static String url = "jdbc:mysql://localhost:3306/blogdb";
+	private String user = "airik";
+	private String pass = "io";
 
-	
 	public BlogDAOImpl(){
-		userMap = new HashMap<>(); 
-		postMap = new HashMap<>(); 
-		initUsers(); 
-		initPosts(); 
-	}
-	@PostConstruct
-	private void initUsers() {
-		// Retrieve an input stream from the servlet context
-		// rather than directly from the file system
-		try{
-			InputStream is = wac.getServletContext().getResourceAsStream("/WEB-INF/resources/users.txt");
-			BufferedReader buf = new BufferedReader(new InputStreamReader(is));
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM"); 
-
-			String line; 
-			while ((line = buf.readLine()) != null) {
-				String[] tokens = line.split("&");
-				int id = Integer.parseInt(tokens[0].trim()); 
-				String firstName = tokens[1].trim();
-				String lastName = tokens[2].trim();
-				String userName = tokens[3].trim();
-				String password = tokens[4].trim();
-				LocalDate accountOrigin = LocalDate.parse(tokens[5].trim(), formatter);
-				User user = new User(id, firstName, lastName, userName, password, accountOrigin); 
-				if(tokens[6].trim().equals("admin"))user.setAdmin(true);
-				userCount++; 
-				userMap.put(user.getId(), user); 
-			}
-		} catch (Exception e) {
-			System.err.println(e);
-		}
-	}
-	@PostConstruct
-	private void initPosts() {
-		// Retrieve an input stream from the servlet context
-		// rather than directly from the file system
-		try{ 
-			InputStream is = wac.getServletContext().getResourceAsStream("/WEB-INF/resources/posts.txt");
-			BufferedReader buf = new BufferedReader(new InputStreamReader(is));
-			DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; 
-
-			String line; 
-			while ((line = buf.readLine()) != null) {
-				String[] tokens = line.split("&");
-				int postId = Integer.parseInt(tokens[0].trim()); 
-				String title = tokens[1].trim();
-				String message = tokens[2].trim();
-				LocalDateTime accountOrigin = LocalDateTime.parse(tokens[3].trim(), formatter); 
-				int userId  = Integer.parseInt(tokens[4].trim());
-				String category = tokens[5].trim(); 
-				Post post = new Post(postId, title, message, accountOrigin, userId); 
-				post.setCategory(category);
-				post.setUserName(getUser(userId).getUserName());
-				postCount++; 
-				userMap.get(post.getUserId()).getPosts().put(post.getPostID(), post); 
-				postMap.put(post.getPostID(), post); 
-			}
-		} catch (Exception e) {
-			System.err.println(e);
-		}
-	}
-	@Override
-	public void saveUsers() {
-		File users = new File(wac.getServletContext().getRealPath("/WEB-INF/resources/users.txt"));        
-        FileOutputStream fos; 
-        List<User> list = getUsers(); 
-        
-		StringBuilder sb = new StringBuilder(); 
-		String amp = " & "; 
 		try {
-			fos = new FileOutputStream(users);
-			for (User user : list) {
-				sb.append(user.getId()); 
-				sb.append(amp); 
-				sb.append(user.getFirstName());
-				sb.append(amp);
-				sb.append(user.getLastName());
-				sb.append(amp);
-				sb.append(user.getPassword());
-				sb.append(amp);
-				sb.append(user.getAccountOrigin());
-				sb.append(amp);
-				if(user.isAdmin()) {
-					sb.append("admin");
-				}
-				else {
-					sb.append("user"); 
-				}
-				fos.write(sb.toString().getBytes());
-			}
-			fos.close();
-		}
-		catch(IOException e) {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			System.err.println("Error loading MySQL");
 		}
 	}
 	@Override
-	public void savePosts() {
-		File users = new File(wac.getServletContext().getRealPath("/WEB-INF/resources/posts.txt"));        
-        FileOutputStream fos; 
-        List<Post> list = getPosts(); 
-        
-		StringBuilder sb = new StringBuilder(); 
-		String amp = " & "; 
-		try {
-			fos = new FileOutputStream(users);
-			for (Post post : list) {
-				sb.append(post.getPostID()); 
-				sb.append(amp); 
-				sb.append(post.getTitle());
-				sb.append(amp);
-				sb.append(post.getMessage());
-				sb.append(amp);
-				sb.append(post.getPostStamp());
-				sb.append(amp);
-				sb.append(post.getUserId());
-				sb.append(amp);
-				sb.append(post.getUserName());
-				sb.append(amp);
-				sb.append(post.getCategory());
+	public Post createPost(Post post) {	
+		StringBuilder sql = new StringBuilder();
+		int rowsAffected; 
+		int returnedId; 
+		LocalDateTime returnedTimeStamp; 
+		
+		sql.append("INSERT INTO post (user_id, title, message, category_id, post_stamp ");
+		sql.append("VALUES(?, ?, ? , ?, (SELECT id FROM category WHERE name = ?) "); 
 
-				fos.write(sb.toString().getBytes());
-			}
-			fos.close();
+		Connection conn = null; 
+		try {
+			conn = DriverManager.getConnection(url, user, pass); 
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS); 			
+			statement.setInt(1, post.getUserId());
+			statement.setString(2, post.getTitle());
+			statement.setString(3,  post.getMessage());
+			statement.setString(4, "\'" + post.getCategory() + "\'");
+			
+			//Convert localdate to SQL timestamp
+			Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+			statement.setTimestamp(5, timestamp);
+			
+			rowsAffected = statement.executeUpdate();
+			System.out.println(rowsAffected);
+			ResultSet key = statement.getGeneratedKeys();
+			
+			while(key.next()) {
+				returnedId = key.getInt(1); 
+				post.setPostID(returnedId);
+				returnedTimeStamp =   key.getTimestamp(5).toLocalDateTime(); 
+				post.setPostStamp(returnedTimeStamp);
+			}			
+			conn.commit();
 		}
-		catch(IOException e) {
+		catch(SQLException e) {
 			e.printStackTrace();
+			return null; 
 		}
+		return post;
 	}
+	
 	@Override
-	public Post createPost(Post post) {
-		User user = userMap.get(post.getUserId()); 
-		postMap.put(post.getPostID(), post);
-		postCount++;
-		return user.getPosts().put(post.getPostID(), post); 
-	}
-	@Override
-	public Post getPost(User user, int id) {
-		User currentUser = userMap.get(user.getId()); 
-		return currentUser.getPosts().get(id); 
+	public Post getPost(int id) {
+		StringBuilder sql = new StringBuilder();	
+		Post post = null; 
+		
+		sql.append("SELECT p.id, p.user_id, p.title, p.message, p.post_stamp, c.name"); 
+		sql.append(" FROM post p JOIN category c  ON p.category_id = c.id WHERE p.id = ?");
+		
+		
+		Connection conn = null; 
+		try {
+			conn = DriverManager.getConnection(url, user, pass); 
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(sql.toString()); 
+			//Send in ID
+			statement.setInt(1, id);
+			//Get values 
+			ResultSet rs = statement.executeQuery();
+			int postId = rs.getInt(1);
+			int userId = rs.getInt(2); 
+			String title = rs.getString(3); 
+			String message = rs.getString(4); 
+			LocalDateTime postOrigin = rs.getTimestamp(5).toLocalDateTime();
+			String category = rs.getString(6); 
+			post = new Post(postId, userId, title, message, postOrigin, category); 
+			conn.commit();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null; 
+		}
+		return post;
 	}
 	@Override
 	public List<Post> getPosts() {
-		return new ArrayList<Post>(postMap.values()); 
+		List<Post> allPosts = new ArrayList<>(); 
+		StringBuilder sql = new StringBuilder(); 
+
+		try {
+			Connection conn = DriverManager.getConnection(url, user, pass);
+			sql.append("SELECT p.id, p.user_id, p.title, p.message, p.post_stamp, c.name"); 
+			sql.append(" FROM post p JOIN category c  ON p.category_id = c.id ORDER p.post_stamp");
+			PreparedStatement stmt = conn.prepareStatement(sql.toString());
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				int id = rs.getInt(1); 
+				int userId = rs.getInt(2); 
+				String title = rs.getString(3); 
+				String message = rs.getString(4); 
+				LocalDateTime postStamp = rs.getTimestamp(5).toLocalDateTime(); 
+				String category = rs.getString(6); 
+				
+				Post post = new Post(id, userId, title, message, postStamp, category); 
+				allPosts.add(post); 
+			}
+			
+			rs.close();
+			stmt.close();
+			conn.close();
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allPosts;	
 	}
 	@Override
 	public Post editPost(Post post) {
-		User user = userMap.get(post.getUserId()); 
-		return user.getPosts().put(post.getPostID(), post); 
+		StringBuilder sql = new StringBuilder(); 
+		
+		sql.append("UPDATE post SET"); 
+		sql.append("title = ?"); 
+		sql.append("message = ?"); 
+		sql.append("category_id = (SELECT id FROM category WHERE name = ?) "); 
+		sql.append("WHERE id = ? "); 
+		
+		Connection conn = null; 
+		try {
+			conn = DriverManager.getConnection(url, user, pass); 
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS); 			
+			statement.setString(1, post.getTitle());
+			statement.setString(2,  post.getMessage());
+			statement.setString(3, "\'" + post.getCategory() + "\'");
+			statement.setInt(4, post.getUserId());
+			
+			ResultSet key = statement.getGeneratedKeys();
+			
+			while(key.next()) {
+				String returnedTitle = key.getString(1); 
+				String returnedMessage = key.getString(2);
+				
+				String getCategory = "SELECT name FROM category WHERE id = ?"; 
+				PreparedStatement categoryStatement = conn.prepareStatement(getCategory, Statement.RETURN_GENERATED_KEYS); 			
+				categoryStatement.setInt(1, key.getInt(3));
+				categoryStatement.executeQuery(); 
+				ResultSet categoryKey = categoryStatement.getGeneratedKeys();
+				
+				String returnedCategory = post.getCategory(); 
+				if(categoryKey.next()) {
+					returnedCategory = categoryKey.getString(1); 
+				}
+				post.setTitle(returnedTitle); 
+				post.setTitle(returnedMessage); 
+				post.setCategory(returnedCategory);
+			}			
+			conn.commit();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null; 
+		}
+		return post;
 	}
 
 	@Override
 	public Post deletePost(Post post) {
-		User user = userMap.get(post.getUserId()); 
-		return user.getPosts().remove(post.getPostID()); 
-	}
-
-	@Override
-	public User createUser(User user) {
-		id = getUsers().get(getUsers().size()-1).getId(); 
-		id++; 
-		user.setId(id);
-		userCount++; 
-		userMap.put(user.getId(), user);
-		return user; 
-	}
-
-	@Override
-	public User getUser(int id) {
-		User user = userMap.get(id); 
-		return user;
-	}
-	@Override
-	public User getUserByUserName(String name) {
-		List<User> list = getUsers(); 
-		User temp =null; 
-		for (User user : list) {
-			if(name.trim().equals(user.getUserName())){
-				temp = user; 
-			}
+		String sql = "DELETE FROM post WHERE id = ?";
+		Connection conn = null; 
+		try {
+			conn = DriverManager.getConnection(url, user, pass); 
+			conn.setAutoCommit(false);
+			
+			PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); 
+			st.setInt(1, post.getPostID());
+			conn.commit();
+			st.close();
+			conn.close();
 		}
-		return temp; 
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null; 
+		}
+		return post;
 	}
 
 	@Override
-	public User editUser(User user) {
-		return userMap.put(user.getId(), user); 
+	public User createUser(User newUser) {
+		StringBuilder sql = new StringBuilder();
+		int returnedId; 
+		LocalDateTime returnedTimeStamp; 
+		
+		sql.append("INSERT INTO user (first_name, last_name, username, password, account_origin, role id ");
+		sql.append("VALUES(?, ? , ?, ?, ?, (SELECT id FROM role WHERE name = ?) "); 
+
+		Connection conn = null; 
+		try {
+			conn = DriverManager.getConnection(url, user, pass); 
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS); 			
+			statement.setString(1, newUser.getFirstName());
+			statement.setString(2, newUser.getLastName());
+			statement.setString(3, newUser.getUserName());
+			statement.setString(4, newUser.getPassword());
+			statement.setString(5, "\'" + newUser.getRole() + "\'");
+			
+			//Convert localdate to SQL timestamp
+			Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+			statement.setTimestamp(5, timestamp);
+			
+			ResultSet key = statement.getGeneratedKeys();
+			
+			while(key.next()) {
+				returnedId = key.getInt(1); 
+				newUser.setId(returnedId);
+				returnedTimeStamp =   key.getTimestamp(5).toLocalDateTime(); 
+				newUser.setAccountOrigin(returnedTimeStamp);
+			}			
+			conn.commit();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null; 
+		}
+		return newUser;
 	}
+
+	@Override
+	public User getUserById(int id) {
+		StringBuilder sql = new StringBuilder();	
+		User foundUser = null; 
+		
+		sql.append("SELECT u.id, u.first_name, u.last_name, u.username, u.password, u.account_origin, r.name"); 
+		sql.append(" FROM user u JOIN role r  ON u.role_id = r.id WHERE u.id = ?");
+		
+		
+		Connection conn = null; 
+		try {
+			conn = DriverManager.getConnection(url, user, pass); 
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(sql.toString()); 
+			//Send in ID
+			statement.setInt(1, id);
+			//Get values 
+			ResultSet rs = statement.executeQuery();
+			int userId = rs.getInt(1);
+			String firstName = rs.getString(2); 
+			String lastName = rs.getString(3); 
+			String username = rs.getString(4); 
+			String password = rs.getString(4); 
+			LocalDateTime accountOrigin = rs.getTimestamp(5).toLocalDateTime();
+			String role = rs.getString(6); 
+			foundUser = new User(userId, firstName, lastName, username, password,
+					accountOrigin, role); 
+			conn.commit();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null; 
+		}
+		return foundUser;
+	}
+	@Override
+	public User getUserByUserName(String userName) {
+		User foundUser = null;
+		try {
+			Connection conn = DriverManager.getConnection(url, user, pass);
+			String sql = "SELECT * FROM user WHERE username = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "\'"+ userName + "\'");
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				int id = rs.getInt(1);
+				String firstName = rs.getString(2);
+				String lastName = rs.getString(3);
+				String username = rs.getString(4);
+				String password = rs.getString(5);
+				LocalDateTime accountOrigin = rs.getTimestamp(6).toLocalDateTime();
+				String role = rs.getString(7);
+
+				foundUser = new User(id, firstName, lastName, username, password
+						, accountOrigin, role);
+			}
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null; 
+		}
+		return foundUser;
+	}
+
+	@Override
+	public User editUser(User editUser) {
+		StringBuilder sql = new StringBuilder(); 
+		
+		sql.append("UPDATE user SET"); 
+		sql.append("first_name = ?"); 
+		sql.append("last_name = ?"); 
+		sql.append("username = ? "); 
+		sql.append("password = ? "); 
+		sql.append("WHERE id = ? "); 
+		
+		Connection conn = null; 
+		try {
+			conn = DriverManager.getConnection(url, user, pass); 
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS); 			
+			statement.setString(1, editUser.getTitle());
+			statement.setString(2,  post.getMessage());
+			statement.setString(3, "\'" + post.getCategory() + "\'");
+			statement.setInt(4, post.getUserId());
+			
+			statement.setInt(5, editUser.getId());
+			
+			ResultSet key = statement.getGeneratedKeys();
+			
+			while(key.next()) {
+				String returnedTitle = key.getString(1); 
+				String returnedMessage = key.getString(2);
+				
+				String getCategory = "SELECT name FROM category WHERE id = ?"; 
+				PreparedStatement categoryStatement = conn.prepareStatement(getCategory, Statement.RETURN_GENERATED_KEYS); 			
+				categoryStatement.setInt(1, key.getInt(3));
+				categoryStatement.executeQuery(); 
+				ResultSet categoryKey = categoryStatement.getGeneratedKeys();
+				
+				String returnedCategory = post.getCategory(); 
+				if(categoryKey.next()) {
+					returnedCategory = categoryKey.getString(1); 
+				}
+				post.setTitle(returnedTitle); 
+				post.setTitle(returnedMessage); 
+				post.setCategory(returnedCategory);
+			}			
+			conn.commit();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null; 
+		}
+		return post;	}
 
 	@Override
 	public User deleteUser(User user) {

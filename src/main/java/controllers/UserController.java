@@ -89,10 +89,7 @@ public class UserController {
 			mv.addObject("error", "User name is taken choose a different one");
 			return mv;
 		}
-		user.setAdmin(false);
-		user.setAccountOrigin(LocalDate.now());
 		dao.createUser(user);
-		dao.saveUsers();
 		session.setAttribute("user", user);
 		mv.setViewName("browse");
 		return mv;
@@ -121,10 +118,8 @@ public class UserController {
 		User user = (User) session.getAttribute("user");
 		int postId = dao.getPostTotal() + 1;
 		post.setPostID(postId);
-		post.setUserName(user.getUserName());
 		post.setUserId(user.getId());
 		dao.createPost(post);
-		user.getPosts().put(post.getPostID(), post);
 		mv.addObject("posts", dao.getPostsByCategory(post.getCategory()));
 		return mv;
 	}
