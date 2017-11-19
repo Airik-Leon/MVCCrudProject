@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class BlogDAOImpl implements BlogDAO {
 	private static String url = "jdbc:mysql://localhost:3306/blogdb";
-	private String user = "airik";
-	private String pass = "io";
+	private String user = "root";
+	private String pass = "FGyu67%#S";
 
 	public BlogDAOImpl(){
 		try {
@@ -108,8 +108,9 @@ public class BlogDAOImpl implements BlogDAO {
 
 		try {
 			Connection conn = DriverManager.getConnection(url, user, pass);
-			sql.append("SELECT p.id, p.user_id, p.title, p.message, p.post_stamp, c.name"); 
-			sql.append(" FROM post p JOIN category c  ON p.category_id = c.id ORDER BY p.post_stamp");
+			sql.append("SELECT p.id, p.user_id, p.title, p.message, p.post_stamp, c.name, u.username"); 
+			sql.append(" FROM post p JOIN category c  ON p.category_id = c.id ");
+			sql.append(" JOIN user u ON p.user_id = u.id ORDER BY p.post_stamp ");
 			PreparedStatement stmt = conn.prepareStatement(sql.toString());
 			ResultSet rs = stmt.executeQuery();
 			
@@ -120,8 +121,10 @@ public class BlogDAOImpl implements BlogDAO {
 				String message = rs.getString(4); 
 				LocalDateTime postStamp = rs.getTimestamp(5).toLocalDateTime(); 
 				String category = rs.getString(6); 
+				String username = rs.getString(7); 
 				
 				Post post = new Post(id, userId, title, message, postStamp, category); 
+				post.setUsername(username);
 				allPosts.add(post); 
 			}
 			
@@ -448,8 +451,9 @@ public class BlogDAOImpl implements BlogDAO {
 		try {
 			Connection conn = DriverManager.getConnection(url, user, pass);
 			
-			 sql.append("SELECT p.id, p.user_id, p.title, p.message, p.post_stamp, c.name ");
+			 sql.append("SELECT p.id, p.user_id, p.title, p.message, p.post_stamp, c.name, u.username ");
 			 sql.append(" FROM post p JOIN category c ON  p.category_id = c.id "); 
+			 sql.append(" JOIN user u ON p.user_id = u.id ");
 			 sql.append(" WHERE c.name LIKE ? " ); 
 			 
 			PreparedStatement stmt = conn.prepareStatement(sql.toString());
@@ -464,7 +468,9 @@ public class BlogDAOImpl implements BlogDAO {
 				String message = rs.getString(4); 
 				LocalDateTime postStamp = rs.getTimestamp(5).toLocalDateTime();
 				String categoryName = rs.getString(6);
-				Post post = new Post(id, userId, title, message, postStamp, categoryName); 
+				String username = rs.getString(7);
+				Post post = new Post(id, userId, title, message, postStamp, categoryName);
+				post.setUsername(username);
 				list.add(post); 
 			}
 			

@@ -6,19 +6,14 @@
 <title></title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-    integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-    crossorigin="anonymous">
-<link rel="stylesheet" href="./css/site.css" />
-<link rel="stylesheet" href="./css/theme.css" />
+<%@ include file="SharedViews/Layout_StyleSheets.jsp" %>
 </head>
 <body>
     <%@ include file="SharedViews/Layout_user.jsp"%>
     <%@ include file="SharedViews/Layout_browse.jsp"%>
     
     <div class="row justify-content-center ">
-        <div class="card m-2" style="width: 20rem;">
+        <div class="card m-2" style="width: 18rem;">
             <img class="card-img-top" src="./images/project.png"
                 alt="Card image cap" style="height: 300px;">
             <div class="card-body bg-light">
@@ -30,7 +25,7 @@
                 </a>
             </div>
         </div>
-        <div class="card m-2" style="width: 20rem;">
+        <div class="card m-2" style="width: 18rem;">
             <img class="card-img-top" src="./images/cgpGrey.png"
                 alt="Card image cap" style="height: 300px;">
             <div class="card-body bg-light">
@@ -42,7 +37,7 @@
                 </a>
             </div>
         </div>
-        <div class="card m-2" style="width: 20rem;">
+        <div class="card m-2" style="width: 18rem;">
             <img class="card-img-top" src="./images/photo.png"
                 alt="Card image cap" style="height: 300px">
             <div class="card-body bg-light">
@@ -54,7 +49,7 @@
                 </a>
             </div>
         </div>
-        <div class="card m-2" style="width: 20rem;">
+        <div class="card m-2" style="width: 18rem;">
             <img class="card-img-top" src="./images/allMessages.png"
                 alt="Card image cap" style="height: 300px">
             <div class="card-body bg-light">

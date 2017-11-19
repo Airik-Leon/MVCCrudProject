@@ -9,7 +9,7 @@
                         <input type="hidden" name="postId"
                             value="${p.postID}" /> <input type="hidden"
                             name="postUserName" value="${p.userId}" />
-                        <label>posted</label> ${p.title } on
+                        <label>${p.username} posted </label> ${p.title } on
                         ${p.postStamp }
                         <hr>
                         <div class="jumbotron jumbotron-fluid rounded">
