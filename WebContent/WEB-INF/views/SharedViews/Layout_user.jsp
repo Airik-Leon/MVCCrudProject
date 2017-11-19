@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<container>
-
+<container> 
 <nav class="navbar navbar-dark bg-primary">
     <a class="navbar-brand" href="http://airikleon.io"> <img
         class="rounded-circle" src="images/icons/GreekAlpha.ico" />

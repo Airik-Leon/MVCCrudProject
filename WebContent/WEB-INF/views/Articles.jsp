@@ -26,60 +26,67 @@
         <li class="nav-item"><a class="nav-link "
             href="goToAllMessages.do">All Messages</a></li>
     </ul>
-    <div class="row justify-content-center" style="margin-top: 20px;">
-        <ul>
-            <c:forEach var="p" items="${posts}">
-                <form action="goToReply.do" method="Post">
-                    <input type="hidden" name="postId"
-                        value="${p.postID}" />
-                    <input type="hidden" name="postUserName"
-                        value="" />
-                    <ul class="justify-container-center"
-                        style="margin: 20px;">
-                        <li class="list-group-item">
-                            posted ${p.title } on ${p.postStamp }</li>
-                        <li class="list-group-item"><textarea
-                                rows="4" cols="100"
-                                placeholder="${p.message}" readonly></textarea></li>
-                        <li class="list-group-item">
-                            <ul style="list-style:none;">
-                                <c:forEach var="reply"
-                                    items="${p.replies}">
-                                    <li class="list-group-item">
-                                        <em style="font-size:8px;">${reply.title } on ${reply.postStamp }</em>
-                                        <p>
-                                           ${reply.username}: ${reply.message}
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="btn-group">
-                                <button type="button"
-                                    class="btn btn-danger dropdown-toggle"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Reply</button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item"> <textarea
-                                            rows="2" cols="40"
-                                            name="reply"></textarea>
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <div class="dropdown-item">
-                                        <input type="submit"
-                                            value="post message"
-                                            class="btn btn-primary" />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <c:forEach var="p" items="${posts}">
+                    <form action="goToReply.do" method="Post" style="background-color:#E9ECEF;padding:10px; margin:10px; border-radius:5px;">
+                        <div class="form-group">
+                            <input type="hidden" name="postId"
+                                value="${p.postID}" /> <input
+                                type="hidden" name="postUserName"
+                                value="${p.userId}" /> <label>posted</label>
+                            ${p.title } on ${p.postStamp }
+                            <hr>
+                            <div class="jumbotron jumbotron-fluid" style="background-color:white; border-raidus:5px;">
+                                <div class="container" style=" padding:5px;">
+                                    <p class="lead">${p.title }</p>
+                                    ${p.message }
+                                </div>
+                            </div>
+                            <hr>
+                            <c:forEach var="reply" items="${p.replies}">
+       
+                                <p style="background-color:#007BFF; border-radius:5px; padding:5px; width:auto; height:50px;color:white;">${reply.username}:
+                                    ${reply.message}<br>
+                               </p>
+                                     <em style="font-size: 8px;">${reply.title }
+                                    on ${reply.postStamp }</em>
+                                    <hr>
+                            </c:forEach>
+
+                            <button type="button"
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target=".bd-example-modal-lg">Reply
+                                </button>
+                            <div class="modal fade bd-example-modal-lg"
+                                tabindex="-1" role="dialog"
+                                aria-labelledby="myLargeModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <a class="dropdown-item"> <textarea
+                                                class="form-control"
+                                                rows="2" cols="40"
+                                                name="reply"></textarea>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <div class="dropdown-item">
+                                            <input type="submit"
+                                                value="post message"
+                                                class="btn btn-primary" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                </form>
-
-            </c:forEach>
-        </ul>
+                            </div>
+                    </form>
+                </c:forEach>
+            </div>
+            <!--             <div class="col-sm">One of three columns</div>
+ -->
+        </div>
     </div>
  <%@ include file="SharedViews/Layout_footer.jsp" %>
 
