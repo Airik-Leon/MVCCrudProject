@@ -12,23 +12,14 @@
     integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
     crossorigin="anonymous">
 <link rel="stylesheet" href="./css/site.css" />
+<link rel="stylesheet" href="./css/theme.css" />
 </head>
 <body>
     <%@ include file="SharedViews/Layout_AdminHome.jsp"%>
-       <ul class="nav nav-tabs">
-        <li class="nav-item"><a class="nav-link" href="splash.do">Home</a>
-        </li>
-        <li class="nav-item"><a class="nav-link active"
-            href="goToAdmin.do">Admin Home</a>
-        <li class="nav-item"><a class="nav-link"
-            href="goToCreateUser.do">Create User</a></li>
-        <li class="nav-item"><a class="nav-link "
-            href="goToUserInfo.do">Get User</a></li>
-        <li class="nav-item"><a class="nav-link"
-            href="goToCreatePost.do"> Create Post</a></li>
-    </ul>
+    <%@ include file="SharedViews/Layout_AdminNavBar.jsp"%>
+
     <div class="row justify-content-center" id="totalUsers">
-                <h6>Total Users:</h6>
+        <h6>Total Users:</h6>
         <br>
         <p>${userCount}</p>
     </div>
@@ -45,33 +36,8 @@
             <p>${log}</p>
         </c:forEach>
     </div>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    <span class="text-muted"> &copy 2017 Airik
-                        Leon</span>
-                </div>
-                <div class="col-sm">
-                    <div class="container">
-                        <a
-                                    href="https://www.linkedin.com/in/airik-leon-b0730a93/">
-                            <img src="images/socialMedia/in.png" />
-                        </a> <a href="https://github.com/Airik-Leon"> <img
-                                    src="images/socialMedia/github.png" />
-                        </a> <a href="https://www.facebook.com/airik.leon">
-                            <img src="images/socialMedia/fb.png" />
-                        </a> <a href="tel:8168050627"> <img
-                                    src="images/socialMedia/phone.png" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-        </body>
+    <%@ include file="SharedViews/Layout_footer.jsp"%>
+</body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>

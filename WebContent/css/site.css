@@ -1,9 +1,6 @@
 @charset "UTF-8";
 /* General Page */
-html, body{
-	height: auto;
-	width:auto;
-}
+
 /* Splash page  */
 #splashDiv{
   margin-top:200px;
@@ -22,10 +19,32 @@ html, body{
 	margin:10px; 
 	width:200px;
 }
-
-
-
-
+/*Browse Pages*/
+.post-component{
+	background-color:#E9ECEF;
+	padding:10px; 
+	margin:10px; 
+	border-radius:5px; 
+	box-shadow:5px 5px 5px 5px silver;
+}
+.jumbotron{
+	background-color:white;
+	border-raidus:5px;
+}
+.jumbotron .container{
+	padding:5px;
+}
+.post-reply{
+	 background-color:#007BFF;
+	 border-radius:5px; 
+	 padding:5px; 
+	 width:auto; 
+	 height:50px;
+	 color:white;
+}
+em{
+	font-size: 8px;
+}
 /* Stick Footer */
 html {
   position: relative;
@@ -49,13 +68,4 @@ body {
 footer img{
 		height: 50px;
 		width:50px;
-}
-.navbar a img{
-	background-color:white; 
-	height: 50px;
-	width:50px;
-	/* border-radius: 30px; */
-}
-.navbar ul li a{
-	font-size:24pt;
 }
