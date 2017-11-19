@@ -17,24 +17,30 @@
 <body>
     <%@ include file="SharedViews/Layout_AdminHome.jsp"%>
     <%@ include file="SharedViews/Layout_AdminNavBar.jsp"%>
-
-    <div class="row justify-content-center" id="totalUsers">
-        <h6>Total Users:</h6>
-        <br>
-        <p>${userCount}</p>
-    </div>
-    <div class="row justify-content-center" id="totalPosts">
-        <h6>Total Posts:</h6>
-        <br>
-        <p>${postCount}</p>
-    </div>
-    <div class="row justify-content-center">
-        <h4>ActivityLog</h4>
-    </div>
-    <div class="row justify-content-center">
-        <c:forEach var="log" items="${activityLog}">
-            <p>${log}</p>
-        </c:forEach>
+    <br>
+    <div class="row justify-content-center ">
+        <div class="card" style="width: 20rem;">
+            <div class="card-body">
+                <button type="button" class="btn btn-primary">
+                    Total Users <span class="badge badge-light">${userCount}</span>
+                </button>
+            </div>
+        </div>
+        <div class="card" style="width: 20rem;">
+            <div class="card-body">
+                <button type="button" class="btn btn-primary">
+                    Total Posts <span class="badge badge-light">${postCount}</span>
+                </button>
+            </div>
+        </div>
+        <div class="card" style="width: 20rem">
+            <div class="card-body">
+                <h4 class="card-title">ActivityLog</h4>
+                <c:forEach var="log" items="${activityLog}">
+                    <p class="card-text">${log}</p>
+                </c:forEach>
+            </div>
+        </div>
     </div>
     <%@ include file="SharedViews/Layout_footer.jsp"%>
 </body>

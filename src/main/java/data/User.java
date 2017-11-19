@@ -8,7 +8,7 @@ public class User {
 	private String firstName;
 	@Size(min=2, max=20)
 	private String lastName; 
-	@Size(min=5, max=10, message="user names must be at least 5 characters")
+	@Size(min=5, max=20, message="user names must be at least 5 characters and less than 10")
 	private String userName; 
 	@Size(min=8, max=20, message="password must be at least 8 characters")
 	private String password; 

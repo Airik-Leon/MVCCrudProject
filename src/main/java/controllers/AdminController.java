@@ -97,6 +97,14 @@ public class AdminController {
 			mv.addObject("error", "User name is taken choose a different one");
 			return mv; 
 		}
+		
+		if(user.getRole() == 0) {
+			user.setRole(1);
+		}
+		else {
+			user.setRole(2);
+		}
+		
 		dao.createUser(user);
 		sb.append("Date: "); 
 		sb.append(LocalDate.now()); 

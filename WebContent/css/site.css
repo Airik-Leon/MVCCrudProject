@@ -1,10 +1,6 @@
 @charset "UTF-8";
 /* General Page */
 
-/* Splash page  */
-#splashDiv{
-  margin-top:200px;
-}
 #admin, #guest{
 	margin:10px;
 	width:300px;

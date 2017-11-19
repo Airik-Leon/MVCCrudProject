@@ -12,7 +12,7 @@
                         <label>posted</label> ${p.title } on
                         ${p.postStamp }
                         <hr>
-                        <div class="jumbotron jumbotron-fluid">
+                        <div class="jumbotron jumbotron-fluid rounded">
                             <div class="container">
                                 <p class="lead">${p.title }</p>
                                 ${p.message }

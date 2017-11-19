@@ -16,69 +16,55 @@
 <body>
     <%@ include file="SharedViews/Layout_user.jsp"%>
     <%@ include file="SharedViews/Layout_browse.jsp"%>
-    <div class="container">
-        <h1 class="row justify-content-center">Categories</h1>
-        <div class="row justify-content-center">
-            <div class="col-sm">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="./images/project.png"
-                        alt="Card image cap" style="height: 300px;">
-                    <div class="card-body">
-                        <h4 class="card-title">Projects after
-                            thoughts</h4>
-                        <p class="card-text">My thoughts on the
-                            projects I have worked on and how I feel
-                            about various software engineering topics.</p>
-                        <a href="goToAfterThoughts.do"
-                            class="btn btn-primary">Go </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="./images/cgpGrey.png"
-                        alt="Card image cap" style="height: 300px;">
-                    <div class="card-body">
-                        <h4 class="card-title">Articles</h4>
-                        <p class="card-text">I first started college
-                            wanting to do journalism. Somehow I ended
-                            studying Software Engineering.</p>
-                        <a href="goToArticles.do"
-                            class="btn btn-primary">Go </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm" style="height: 500px">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top" src="./images/photo.png"
-                        alt="Card image cap" style="height: 300px">
-                    <div class="card-body">
-                        <h4 class="card-title">Photography</h4>
-                        <p class="card-text">My work as a
-                            photographer. A hobby I don't practice
-                            enough of but I will always enjoy the
-                            landscapes when I can.</p>
-                        <a href="goToPhotography.do"
-                            class="btn btn-primary">Go </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm" style="height: 500px">
-                <div class="card" style="width: 20rem;">
-                    <img class="card-img-top"
-                        src="./images/allMessages.png"
-                        alt="Card image cap" style="height: 300px">
-                    <div class="card-body">
-                        <h4 class="card-title">All Messages</h4>
-                        <p class="card-text">Everything in one
-                            place.</p>
-                        <a href="goToAllMessages.do"
-                            class="btn btn-primary">Go </a>
-                    </div>
-                </div>
+    
+    <div class="row justify-content-center ">
+        <div class="card m-2" style="width: 20rem;">
+            <img class="card-img-top" src="./images/project.png"
+                alt="Card image cap" style="height: 300px;">
+            <div class="card-body bg-light">
+                <h4 class="card-title">Projects after thoughts</h4>
+                <p class="card-text">My thoughts on the projects I
+                    have worked on and how I feel about various software
+                    engineering topics.</p>
+                <a href="goToAfterThoughts.do" class="btn btn-primary">Go
+                </a>
             </div>
         </div>
-    </div>
+        <div class="card m-2" style="width: 20rem;">
+            <img class="card-img-top" src="./images/cgpGrey.png"
+                alt="Card image cap" style="height: 300px;">
+            <div class="card-body bg-light">
+                <h4 class="card-title">Articles</h4>
+                <p class="card-text ">I first started college wanting
+                    to do journalism. Somehow I ended studying Software
+                    Engineering.</p>
+                <a href="goToArticles.do" class="btn btn-primary">Go
+                </a>
+            </div>
+        </div>
+        <div class="card m-2" style="width: 20rem;">
+            <img class="card-img-top" src="./images/photo.png"
+                alt="Card image cap" style="height: 300px">
+            <div class="card-body bg-light">
+                <h4 class="card-title">Photography</h4>
+                <p class="card-text">My work as a photographer. A
+                    hobby I don't practice enough of but I will always
+                    enjoy the landscapes when I can.</p>
+                <a href="goToPhotography.do" class="btn btn-primary">Go
+                </a>
+            </div>
+        </div>
+        <div class="card m-2" style="width: 20rem;">
+            <img class="card-img-top" src="./images/allMessages.png"
+                alt="Card image cap" style="height: 300px">
+            <div class="card-body bg-light">
+                <h4 class="card-title">All Messages</h4>
+                <p class="card-text">Everything in one place.</p>
+                <a href="goToAllMessages.do" class="btn btn-primary">Go
+                </a>
+            </div>
+        </div>
+    </div> 
     <%@ include file="SharedViews/Layout_footer.jsp"%>
 
 </body>

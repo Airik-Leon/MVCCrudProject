@@ -35,4 +35,6 @@
                 href="tel:816-805-0627">Phone</a></li>
         </ul>
     </div>
-</footer> </container>
+</footer> 
+<script src="javascript/site.js"></script>
+</container>

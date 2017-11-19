@@ -60,6 +60,10 @@
                     placeholder="Password" />
                 <form:errors path="password"></form:errors>
             </div>
+            <div class="form-group border rounded p-2">
+                <label>Check for Admin privileges</label>
+                <form:checkbox class="form-control" value="1" path="role" name="role" id="role"/>
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form:form>
         <label>${error}</label>
