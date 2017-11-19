@@ -18,21 +18,22 @@
 <body onload="setInterval()">
     <%@ include file="SharedViews/Layout_user.jsp"%>
 
-    <h1 class="row justify-content-center align-center" id="change"></h1>
+    <div class="row justify-content-center">
+        <h1 id="change" class=" text-dark p-5 rounded-circle m-2 ">  </h1>
+    </div>
 
     <div class="row justify-content-center align-middle">
-        <div class="bg-light p-2 rounded" id="splashDiv">
+        <div class="p-2 m-4 rounded bg-light" id="splashDiv">
             <form action="admin.do" method="GET">
-                <input class="btn btn-danger" id="admin" type="submit"
+                <input class="btn  btn-outline-dark" id="admin" type="submit"
                     name="admin" value="${admin}" />
             </form>
             <form action="browse.do" method="GET">
-                <input class="btn btn-success" id="guest" type="submit"
+                <input class="btn  btn-outline-danger" id="guest" type="submit"
                     value="Browse posts" name="guest" />
             </form>
         </div>
     </div>
-
     <%@ include file="SharedViews/Layout_footer.jsp"%>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

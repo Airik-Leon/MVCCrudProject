@@ -1,67 +1,46 @@
 @charset "UTF-8";
 /* General Page */
-
-#admin, #guest{
-	margin:10px;
-	width:300px;
+#admin, #guest {
+	margin: 10px;
+	width: 300px;
 }
 /* Admin home page  */
-#totalUsers, #totalPosts{
-	border:1px solid silver; 
-	padding: 10px; 
+#totalUsers, #totalPosts {
+	border: 1px solid silver;
+	padding: 10px;
 }
 /* Admin userInfo Page  */
-#btnAdminUpdateUser, #btnAdminDeleteUser{
-	margin:10px; 
-	width:200px;
+#btnAdminUpdateUser, #btnAdminDeleteUser {
+	margin: 10px;
+	width: 200px;
 }
 /*Browse Pages*/
-.post-component{
-	background-color:#E9ECEF;
-	padding:10px; 
-	margin:10px; 
-	border-radius:5px; 
-	box-shadow:5px 5px 5px 5px silver;
+.post-component {
+	background-color: #E9ECEF;
+	padding: 10px;
+	margin: 10px;
+	border-radius: 5px;
+	box-shadow: 5px 5px 5px 5px silver;
 }
-.jumbotron{
-	background-color:white;
-	border-raidus:5px;
+
+.jumbotron {
+	background-color: white;
+	border-raidus: 5px;
 }
-.jumbotron .container{
-	padding:5px;
+
+.jumbotron .container {
+	padding: 5px;
 }
-.post-reply{
-	 background-color:#007BFF;
-	 border-radius:5px; 
-	 padding:5px; 
-	 width:auto; 
-	 height:50px;
-	 color:white;
+
+.post-reply {
+	background-color: #007BFF;
+	border-radius: 5px;
+	padding: 5px;
+	width: auto;
+	height: 50px;
+	color: white;
 }
-em{
+
+em {
 	font-size: 8px;
-}
-/* Stick Footer */
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  margin-bottom: 60px; /* Margin bottom by footer height */
-}
-.footer {
-	margin-top:50px;
-  position: absolute;
-  left:0;
-  bottom: 0;
-  width: 100%;
-    text-align: center;
-    padding-top:10px;
-  height: 70px; /* Set the fixed height of the footer here */
-  vertical-line:60px;
-  background-color: #f5f5f5;
-}
-footer img{
-		height: 50px;
-		width:50px;
 }
