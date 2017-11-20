@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class BlogDAOImpl implements BlogDAO {
 	private static String url = "jdbc:mysql://localhost:3306/blogdb";
-	private String user = "root";
-	private String pass = "FGyu67%#S";
+	private String user = "airik";
+	private String pass = "io";
 
 	public BlogDAOImpl(){
 		try {

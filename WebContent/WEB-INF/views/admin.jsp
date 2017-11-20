@@ -13,7 +13,7 @@
     <%@ include file="SharedViews/Layout_AdminHome.jsp"%>
     <%@ include file="SharedViews/Layout_AdminNavBar.jsp"%>
     <br>
-    <div class="row justify-content-center ">
+    <div class="row justify-content-center">
         <div class="card" style="width: 20rem;">
             <div class="card-body">
                 <button type="button" class="btn btn-primary">
@@ -37,6 +37,7 @@
             </div>
         </div>
     </div>
+    <br>
     <%@ include file="SharedViews/Layout_footer.jsp"%>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

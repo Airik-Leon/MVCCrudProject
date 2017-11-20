@@ -1,6 +1,7 @@
 # MVC CRUD Project
 ## Author: Airik Leon
 ### Date: November 2017
+![alt tag](https://i.imgur.com/sI5Tx6a.png "Blog photo")
 
 This project is a blog that is (still in development) and is intended to show off Spring skills and provide a blog for my projects, articles, and photography portfolio.
 
@@ -16,6 +17,6 @@ Future things I would like to add are the following:
 
 My biggest problem were the following:
 - test cases I only had a few days and I had many features to add so I decided to skip test cases to get the feaures working. And that is a regret that I will carry with me. :(
-  
+
 - Handling user errors that would crash the program
 - Handling multiple users

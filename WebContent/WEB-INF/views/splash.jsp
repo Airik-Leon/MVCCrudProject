@@ -7,25 +7,32 @@
 <title>Airik's blog</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<%@ include file="SharedViews/Layout_StyleSheets.jsp" %>
+<%@ include file="SharedViews/Layout_StyleSheets.jsp"%>
 
 </head>
 <body onload="setInterval()">
     <%@ include file="SharedViews/Layout_user.jsp"%>
-
-    <div class="row justify-content-center">
-        <h1 id="change" class=" text-dark p-5 rounded-circle m-2 ">  </h1>
-    </div>
+        <div class="row justify-content-center">
+            <h1 id="change" class=" text-dark p-5 rounded-circle m-2 ">
+            </h1>
+        </div>
+        <div class="container justify-content-center" style="width:400px;">
+            <c:if test="${not empty createPostFail}">
+                <div class="alert alert-warning" role="alert">
+                   ${createPostFail}                   
+                </div>
+            </c:if>
+        </div>
 
     <div class="row justify-content-center align-middle">
         <div class="p-2 m-4 rounded bg-light" id="splashDiv">
             <form action="admin.do" method="GET">
-                <input class="btn  btn-outline-dark" id="admin" type="submit"
-                    name="admin" value="${admin}" />
+                <input class="btn  btn-outline-dark" id="admin"
+                    type="submit" name="admin" value="${admin}" />
             </form>
             <form action="browse.do" method="GET">
-                <input class="btn  btn-outline-danger" id="guest" type="submit"
-                    value="Browse posts" name="guest" />
+                <input class="btn  btn-outline-danger" id="guest"
+                    type="submit" value="Browse posts" name="guest" />
             </form>
         </div>
     </div>

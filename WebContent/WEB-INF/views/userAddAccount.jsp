@@ -14,34 +14,34 @@
 <%@ include file="SharedViews/Layout_user.jsp" %>
     <div class="row justify-content-center">
         <form:form action="addUserAccount.do" method="POST"
-            modelAttribute="user">
+            modelAttribute="user" class="mb-5">
             <div class="form-group">
                 <label>First Name </label>
                 <form:input type="text" class="form-control"
                     name="firstName" path="firstName" id="firstName"
                     placeholder="First Name" required="true"/>
-                <form:errors path="firstName"></form:errors>
+                <form:errors path="firstName"/>
             </div>
             <div class="form-group">
                 <label for="lastName">Last Name</label>
                 <form:input type="text" class="form-control"
                     path="lastName" id="lastName" name="lastName"
                     placeholder="Last Name" required="true" />
-                <form:errors path="lastName"></form:errors>
+                <form:errors path="lastName"/>
             </div>
             <div class="form-group">
                 <label for="userName">User Name</label>
                 <form:input type="text" class="form-control"
                     path="userName" id="userName" name="userName"
                     placeholder="User Name" required="true"/>
-                <form:errors path="userName"></form:errors>
+                <form:errors path="userName"/>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <form:input type="text" class="form-control"
                     id="password" path="password" name="password"
                     placeholder="Password" required="true"/>
-                <form:errors path="password"></form:errors>
+                <form:errors path="password"/>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form:form>

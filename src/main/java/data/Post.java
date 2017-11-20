@@ -1,14 +1,17 @@
 package data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
 public class Post {
-	protected int postID; 
-	protected int userId;
+	protected int postID;
+	protected int userId; 
 	protected String username; 
+	@Size(min=5, max=10, message="Titles must be at least 5 characters long")
 	protected String title; 
+	@Size(min=25, max=1000, message="Post musts be longer than 25 characters")
 	protected String message; 
 	protected LocalDateTime postStamp; 
 	protected String category;

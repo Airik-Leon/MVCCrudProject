@@ -27,7 +27,7 @@
     </ul>
     <div class="row justify-content-center">
         <form:form action="createUser.do" method="POST"
-            modelAttribute="user">
+            modelAttribute="user" class="mb-4">
             <div class="form-group">
                 <label>First Name </label>
                 <form:input type="text" class="form-control"

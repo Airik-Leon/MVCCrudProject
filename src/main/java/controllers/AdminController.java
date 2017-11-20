@@ -80,16 +80,11 @@ public class AdminController {
 	}
 	//Create User
 	@RequestMapping(path="createUser.do" , method=RequestMethod.POST)
-	public ModelAndView createUser(@Valid User user, Errors e) 
+	public ModelAndView createUser(@Valid User user, Errors e, @RequestParam("role") int role) 
 	{
 		StringBuilder sb = new StringBuilder(); 
 		ModelAndView mv = new ModelAndView("createUser"); 
 		if(e.hasErrors()) {
-			mv.addObject("error", "You must fill out all fields");
-			return mv; 
-		}
-		else if(user.getFirstName().equals("")) {
-			mv.addObject("error", "Name must be longer");
 			return mv; 
 		}
 		//Check if userName taken
@@ -97,12 +92,13 @@ public class AdminController {
 			mv.addObject("error", "User name is taken choose a different one");
 			return mv; 
 		}
-		
-		if(user.getRole() == 0) {
+		if(role == 0) {
 			user.setRole(1);
+			System.out.println(user);
 		}
 		else {
 			user.setRole(2);
+			System.out.println(user);
 		}
 		
 		dao.createUser(user);
