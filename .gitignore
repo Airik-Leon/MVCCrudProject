@@ -1,0 +1,8 @@
+DS_STORE
+bin
+classes
+Blog.war
+build
+gradlew
+gradlew.bat
+target
