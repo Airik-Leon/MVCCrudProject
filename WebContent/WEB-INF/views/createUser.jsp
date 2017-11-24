@@ -57,8 +57,11 @@
                 <form:errors path="password"></form:errors>
             </div>
             <div class="form-group border rounded p-2">
-                <label>Check for Admin privileges</label>
-                <form:checkbox class="form-control" value="1" path="role" name="role" id="role"/>
+                <label>Permissions level</label>
+                <form:select path="role">
+                    <form:option value="1">Admin</form:option>
+                    <form:option value="2">User</form:option>
+                </form:select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form:form>

@@ -92,14 +92,6 @@ public class AdminController {
 			mv.addObject("error", "User name is taken choose a different one");
 			return mv; 
 		}
-		if(role == 0) {
-			user.setRole(1);
-			System.out.println(user);
-		}
-		else {
-			user.setRole(2);
-			System.out.println(user);
-		}
 		
 		dao.createUser(user);
 		sb.append("Date: "); 
