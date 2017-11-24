@@ -16,15 +16,15 @@ technologies used:
 
 For viewers the way to use this application is in two ways. You can browse posts
 by category which is a retrieval function from the DB and if you add an account
-and sign in you can do create functions by posting on the current posts in the blog.
+and sign in you can do a create function by posting on the current posts in the blog.
 For the update and delete functionality you must sign as the guest admin account
-to retrieve users on the getUsers page. It is on the Get User page where you can
+to retrieve users on the get Users page. It is on the Get User page where you can
 update information (excluding the id) of the user or delete a user.
 The guest admin account is below:
 
 ![alt tag](https://i.imgur.com/Iuhoc84.png "Guest Admin info")
 
-if you can't see the information then the if is below:
+if you can't see the information then the info is below:
 
 username = Guest_Admin
 password = admin1234
