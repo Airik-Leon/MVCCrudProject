@@ -41,6 +41,9 @@ Future things I would like to add are the following:
  - customize feeds for users.
 
 
+ For Database Schema see below:
+ ![alt tag](https://i.imgur.com/onHSzxG.png "Guest Admin info")
+
 My biggest problem were the following:
 - test cases I only had a few days and I had many features to add so I decided to skip test cases to get the feaures working. And that is a regret that I will carry with me. :(
 - Handling multiple users
