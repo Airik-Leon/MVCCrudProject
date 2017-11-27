@@ -30,7 +30,10 @@ username = Guest_Admin
 password = admin1234
 
 Admins have ability to create other admins under create a user tab and are
-also allowed to create posts. They can also
+also allowed to create posts.
+
+For Database Schema see below:
+![alt tag](https://i.imgur.com/onHSzxG.png "Guest Admin info")
 
 Future things I would like to add are the following:
  - Users make changes to their accounts.
@@ -39,10 +42,6 @@ Future things I would like to add are the following:
  - Enable direct messaging to other users
  - Add more admin stats on users
  - customize feeds for users.
-
-
- For Database Schema see below:
- ![alt tag](https://i.imgur.com/onHSzxG.png "Guest Admin info")
 
 My biggest problem were the following:
 - test cases I only had a few days and I had many features to add so I decided to skip test cases to get the feaures working. And that is a regret that I will carry with me. :(
